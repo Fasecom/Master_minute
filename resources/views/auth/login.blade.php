@@ -8,7 +8,7 @@
         <!-- Phone Number -->
         <div>
             <x-input-label for="phone" :value="__('Телефон')" />
-            <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="tel" placeholder="+7 (___) ___-__-__" />
+            <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="tel" placeholder="+7 999 123 45 67" />
             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
@@ -19,7 +19,8 @@
             <x-text-input id="password" class="block mt-1 w-full"
                             type="password"
                             name="password"
-                            required autocomplete="current-password" />
+                            required autocomplete="current-password" 
+                            placeholder="••••••••"/>
 
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>

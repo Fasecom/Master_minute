@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700&display=swap');
+
+.btn-main {
+    background: #4B77B7;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 20px;
+    width: 150px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-main:hover {
+    background: #3a5e91;
+}
+
+.h3-main {
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.h4-main {
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+} 
+
+.btn-header {
+    background: #2D64A1;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 65px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-header--wide {
+    width: 300px;
+}
+
+.btn-header--plus {
+    width: 60px;
+    font-size: 32px;
+    font-weight: bold;
+    border-radius: 50;
+    padding: 0;
+}
+
+.btn-header--search {
+    width: 220px;
+}
+
+.input-header {
+    background-color: #F3F3F3 !important;
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 65px !important;
+    height: 45px;
+    border: none;
+    outline: none;
+    padding-left: 25px !important;
+    padding-right: 24px;
+}
+.input-header::placeholder {
+    color: #bdbdbd;
+    font-weight: 400;
+}
+
+.h1-header {
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 35px;
+    margin: 0;
+} 

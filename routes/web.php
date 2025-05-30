@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use App\Models\WorkingShift;
+use App\Models\Workshop;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,14 +18,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('schedule');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+    Route::get('/masters', function () {
+        $masters = User::where('role_id', 3)
+            ->whereNull('work_end_date')
+            ->get();
+        return view('masters.index', compact('masters'));
+    })->name('masters');
+    Route::view('/shops', 'shops.index')->name('shops');
+    Route::view('/schedule', 'schedule.index')->name('schedule');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -56,4 +56,9 @@ class User extends Authenticatable
     {
         return 'phone';
     }
+
+    public function workingShifts()
+    {
+        return $this->hasMany(WorkingShift::class);
+    }
 }

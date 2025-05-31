@@ -1,16 +1,15 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="w-full flex flex-col gap-4 mb-8">
-            <div class="flex items-center justify-between">
+        <div class="w-full flex flex-col gap-4">
+            <div class="flex flex-wrap items-center justify-between">
                 <h1 class="h1-header">Мастера</h1>
-                <div class="flex items-center gap-4">
-                    <button class="btn-header btn-header--wide">Аналитика</button>
-                    <button class="btn-header btn-header--plus">+</button>
+                <div class="flex items-center gap-4 ml-auto">
+                    <button class="btn-leval1 w-[150px] sm:w-[300px]">Аналитика</button>
+                    <button class="btn-leval1 btn-leval1-plus">+</button>
                 </div>
             </div>
             <form method="GET" class="flex gap-4 items-center">
-                <input type="text" name="search" placeholder="поиск" class="input-header w-full" value="{{ request('search') }}">
-                <button class="btn-header btn-header--search" type="submit">Найти</button>
+                <input type="text" name="search" placeholder="Поиск" class="input-header w-full" value="{{ request('search') }}">
             </form>
         </div>
     </x-slot>
@@ -23,22 +22,18 @@
                         $shift = $master->workingShifts()->orderByDesc('date')->first();
                         $workshopName = $shift && $shift->workshop ? $shift->workshop->name : 'Нет смены';
                     @endphp
-                    <div class="master-card flex flex-col justify-between rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 bg-white min-w-[400px] max-w-none min-[1271px]:max-w-[400px] flex-1 basis-[400px] h-[140px]">
-                        <h3 class="h3-main mb-2">{{ $fio }}</h3>
+                    <div class="flex flex-col justify-between rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 bg-white min-w-[400px] max-w-none min-[1271px]:max-w-[400px] flex-1 basis-[400px] h-[140px]">
+                        <h3 class="h3-main mb-2" name="name">{{ $fio }}</h3>
                         <div class="flex items-center justify-between mt-auto">
                             <div class="flex items-center gap-2">
                                 <img src="/img/icon/geo-marker.svg" alt="place" width="20" height="20">
                                 <h4 class="h4-main">{{ $workshopName }}</h4>
                             </div>
-                            <button class="btn-main">Подробнее</button>
+                            <a href="{{ route('masters.info', ['id' => $master->id]) }}" class="btn-leval2">Подробнее</a>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
     </div>
-</x-app-layout>
-
-@push('scripts')
-    @vite(['resources/js/search.js'])
-@endpush 
+</x-app-layout> 

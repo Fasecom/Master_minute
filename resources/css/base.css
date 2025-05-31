@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:200,300,400,500,600,700&display=swap');
+
+.btn-leval1 {
+    background: #2D64A1;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 65px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-leval1-plus {
+    width: 60px;
+    font-size: 26px;
+    font-weight: bold;
+    border-radius: 50;
+}
+
+.btn-leval2 {
+    background: #4B77B7;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 20px;
+    width: 150px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-leval3-red {
+    background: #DE5B5F;
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    border-radius: 18px;
+    width: 63px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.btn-leval2:hover {
+    background: #3a5e91;
+}
+
+.btn-leval2:active {
+    background: #2a4a7d;
+}
+
+.btn-leval1:hover {
+    background: #3D74B1;
+}
+
+.btn-leval1:active {
+    background: #1D5491;
+} 
+
+.input-header {
+    background-color: #F3F3F3 !important;
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    border-radius: 65px !important;
+    height: 45px;
+    border: none;
+    outline: none;
+    padding-left: 25px !important;
+    padding-right: 24px;
+}
+.input-header::placeholder {
+    color: #bdbdbd;
+    font-weight: 400;
+}
+
+.h3-main {
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.h4-main {
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+} 
+
+.h1-header {
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 35px;
+    margin: 0;
+} 
+
+.h3-point {
+    font-size: 21px; /* 18px, аналогично h4-main */
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    color: #2E4555;
+} 
+
+.h3-point-info {
+    font-size: 21px; /* 18px, аналогично h4-main */
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    color: #2E4555;
+}
+
+.h3-point-skills {
+    font-size: 18px; /* 18px, аналогично h4-main */
+    font-weight: 400;
+    font-family: 'Open Sans', sans-serif;
+    color: #2E4555;
+}

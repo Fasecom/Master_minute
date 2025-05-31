@@ -16,9 +16,41 @@ return new class extends Migration
         });
 
         DB::table('service_workshop')->insert([
-            ['workshop_id' => 1, 'service_id' => 1],
-            ['workshop_id' => 1, 'service_id' => 2],
-            ['workshop_id' => 1, 'service_id' => 3],
+            // ТРЦ Фокус
+            ['workshop_id' => 1, 'service_id' => 1], // Ремонт часов
+            ['workshop_id' => 1, 'service_id' => 2], // Продажа и замена батареек
+            ['workshop_id' => 1, 'service_id' => 3], // Продажа и замена ремешков
+            
+            // ТРЦ Фиеста
+            ['workshop_id' => 2, 'service_id' => 1],
+            ['workshop_id' => 2, 'service_id' => 2],
+            ['workshop_id' => 2, 'service_id' => 3],
+            
+            // ТРЦ Горки
+            ['workshop_id' => 3, 'service_id' => 1],
+            ['workshop_id' => 3, 'service_id' => 2],
+            ['workshop_id' => 3, 'service_id' => 3],
+            
+            // ТРЦ Алое Поле
+            ['workshop_id' => 4, 'service_id' => 1],
+            ['workshop_id' => 4, 'service_id' => 2],
+            ['workshop_id' => 4, 'service_id' => 3],
+            
+            // ТРЦ Родник
+            ['workshop_id' => 5, 'service_id' => 1],
+            ['workshop_id' => 5, 'service_id' => 2],
+            ['workshop_id' => 5, 'service_id' => 3],
+            ['workshop_id' => 5, 'service_id' => 4],
+            ['workshop_id' => 5, 'service_id' => 5],
+            ['workshop_id' => 5, 'service_id' => 6],
+            
+            // ТРЦ Кольцо
+            ['workshop_id' => 6, 'service_id' => 1],
+            ['workshop_id' => 6, 'service_id' => 2],
+            ['workshop_id' => 6, 'service_id' => 3],
+            ['workshop_id' => 6, 'service_id' => 4],
+            ['workshop_id' => 6, 'service_id' => 5],
+            ['workshop_id' => 6, 'service_id' => 6],
         ]);
     }
 

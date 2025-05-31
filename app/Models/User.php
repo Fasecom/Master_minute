@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(WorkingShift::class);
     }
+
+    public function skills()
+    {
+        return $this->belongsToMany(\App\Models\Skill::class, 'skill_user', 'user_id', 'skill_id');
+    }
 }

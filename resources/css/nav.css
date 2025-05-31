@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,500,600,700&display=swap');
+
+.custom-nav-link {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: #234E9B;
+    font-weight: 600;
+    transition: color 0.2s;
+    position: relative;
+    height: 64px; /* h-16 */
+    display: flex;
+    align-items: center;
+    padding-bottom: 0;
+}
+.custom-nav-link[aria-current="page"],
+.custom-nav-link.active {
+    color: #2B3F63 !important;
+}
+.custom-nav-link[aria-current="page"]::after,
+.custom-nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: #234E9B;
+    border-radius: 1px;
+}
+.custom-nav-link:hover {
+    color: #2B3F63;
+} 

@@ -24,7 +24,6 @@
 }
 
 .btn-leval2 {
-    background: #4B77B7;
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
@@ -40,8 +39,7 @@
     cursor: pointer;
 }
 
-.btn-leval3-red {
-    background: #DE5B5F;
+.btn-leval3 {
     color: #fff;
     font-family: 'Open Sans', sans-serif;
     font-weight: 500;
@@ -58,12 +56,41 @@
     padding: 0;
 }
 
-.btn-leval2:hover {
-    background: #3a5e91;
+.btn-leval4 {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 12px;
+    width: 50px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
 
-.btn-leval2:active {
-    background: #2a4a7d;
+.btn-red {
+    background: #DE5B5F;
+}
+.btn-red:hover {
+    background: #c55054;
+}
+.btn-red:active {
+    background: #b53a3e;
+}
+
+.btn-blue {
+    background: #4B77B7;
+}
+.btn-blue:hover {
+    background: #4670ac;
+}
+.btn-blue:active {
+    background: #355d9c;
 }
 
 .btn-leval1:hover {
@@ -133,4 +160,42 @@
     font-weight: 400;
     font-family: 'Open Sans', sans-serif;
     color: #2E4555;
+}
+
+/* Кастомный чекбокс для формы навыков */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 1px solid #234E9B;
+    box-shadow: 0 0 1px 1px #234d9b56;
+    border-radius: 6px;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+    margin: 0;
+}
+input[type="checkbox"]:checked {
+    background-color: #234E9B;
+    border-color: #234E9B;
+}
+
+.eye-icon {
+    filter: invert(41%) sepia(19%) saturate(600%) hue-rotate(170deg) brightness(95%) contrast(90%);
+    transition: filter 0.2s;
+    cursor: pointer;
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-input-decoration,
+input[type="password"]::-webkit-input-clear-button,
+input[type="password"]::-webkit-input-password-toggle-button {
+    display: none !important;
 }

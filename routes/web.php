@@ -39,17 +39,37 @@ Route::middleware('auth')->group(function () {
             $now = \Carbon\Carbon::now();
             $years = $now->diffInYears($start);
             $months = $now->copy()->subYears($years)->diffInMonths($start);
-            $experience = trim(($years ? $years.' '.trans_choice('год|года|лет', $years) : '').($years && $months ? ', ' : '').($months ? $months.' '.trans_choice('месяц|месяца|месяцев', $months) : ''));
+            $days = $now->diffInDays($start);
+            if ($years === 0 && $months === 0 && $days > 0) {
+                $experience = 'Меньше месяца';
+            } elseif ($years === 0 && $months === 0 && $days === 0) {
+                $experience = 'Нет стажа';
+            } else {
+                $experience = trim(
+                    ($years ? $years.' '.trans_choice('год|года|лет', $years) : '').
+                    ($years && $months ? ', ' : '').
+                    ($months ? $months.' '.trans_choice('месяц|месяца|месяцев', $months) : '')
+                );
+            }
+        } else {
+            $experience = 'Нет стажа';
         }
         $workStartDate = $workStart ? \Carbon\Carbon::parse($workStart)->format('d.m.Y') : '-';
         $skills = $master ? $master->skills()->pluck('name') : collect();
         return view('masters.info', compact('master', 'workshop', 'experience', 'workStartDate', 'skills'));
     })->name('masters.info');
+    Route::get('/masters/add', [\App\Http\Controllers\MasterController::class, 'create'])->name('masters.add');
+    Route::post('/masters/add', [\App\Http\Controllers\MasterController::class, 'store'])->name('masters.store');
+    Route::get('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'edit'])->name('masters.edit');
+    Route::post('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'update'])->name('masters.update');
+    Route::post('/masters/delete/{id}', [\App\Http\Controllers\MasterController::class, 'delete'])->name('masters.delete');
     Route::view('/shops', 'shops.index')->name('shops');
     Route::view('/schedule', 'schedule.index')->name('schedule');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsEdit'])->name('masters.skills.edit');
+    Route::post('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsUpdate'])->name('masters.skills.update');
 });
 
 require __DIR__.'/auth.php';

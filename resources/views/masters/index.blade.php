@@ -5,11 +5,13 @@
                 <h1 class="h1-header">Мастера</h1>
                 <div class="flex items-center gap-4 ml-auto">
                     <button class="btn-leval1 w-[150px] sm:w-[300px]">Аналитика</button>
-                    <button class="btn-leval1 btn-leval1-plus">+</button>
+                    <a href="{{ route('masters.add') }}" class="btn-leval1 flex items-center justify-center w-[65px] h-[44px] rounded-full p-0" style="min-width:65px;min-height:44px;">
+                        <img src="/img/icon/plus.svg" alt="Добавить" width="24" height="24">
+                    </a>
                 </div>
             </div>
             <form method="GET" class="flex gap-4 items-center">
-                <input type="text" name="search" placeholder="Поиск" class="input-header w-full" value="{{ request('search') }}">
+                <input type="text" name="search" placeholder="Поиск" class="input-header w-full" value="{{ request('search') }}" autocomplete="off">
             </form>
         </div>
     </x-slot>
@@ -29,7 +31,7 @@
                                 <img src="/img/icon/geo-marker.svg" alt="place" width="20" height="20">
                                 <h4 class="h4-main">{{ $workshopName }}</h4>
                             </div>
-                            <a href="{{ route('masters.info', ['id' => $master->id]) }}" class="btn-leval2">Подробнее</a>
+                            <a href="{{ route('masters.info', ['id' => $master->id]) }}" class="btn-leval2 btn-blue">Подробнее</a>
                         </div>
                     </div>
                 @endforeach

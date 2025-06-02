@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     })->name('masters');
     Route::get('/masters/info/{id}', function ($id) {
         $master = User::find($id);
-        $shift = $master?->workingShifts()->orderByDesc('date')->first();
+        $shift = $master?->workingShifts()->whereDate('date', date('Y-m-d'))->first();
         $workshop = $shift?->workshop;
         $workStart = $master?->work_start_date;
         $experience = '-';
@@ -63,7 +63,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'edit'])->name('masters.edit');
     Route::post('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'update'])->name('masters.update');
     Route::post('/masters/delete/{id}', [\App\Http\Controllers\MasterController::class, 'delete'])->name('masters.delete');
-    Route::view('/shops', 'shops.index')->name('shops');
+    Route::get('/shops', [\App\Http\Controllers\ShopController::class, 'index'])->name('shops');
+    Route::get('/shops/add', [\App\Http\Controllers\ShopController::class, 'add'])->name('shops.add');
+    Route::get('/shops/info/{id}', [\App\Http\Controllers\ShopController::class, 'info'])->name('shops.info');
+    Route::post('/shops/add', [\App\Http\Controllers\ShopController::class, 'store'])->name('shops.store');
+    Route::get('/shops/edit/{id}', [\App\Http\Controllers\ShopController::class, 'edit'])->name('shops.edit');
+    Route::post('/shops/edit/{id}', [\App\Http\Controllers\ShopController::class, 'update'])->name('shops.update');
+    Route::post('/shops/delete/{id}', [\App\Http\Controllers\ShopController::class, 'delete'])->name('shops.delete');
+    Route::get('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesEdit'])->name('shops.services.edit');
+    Route::post('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesUpdate'])->name('shops.services.update');
     Route::view('/schedule', 'schedule.index')->name('schedule');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

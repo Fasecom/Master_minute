@@ -14,7 +14,7 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col gap-5 bg-white rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 md:p-[20px] min-h-[340px] w-full mb-5">
-                <div class="flex gap-8">
+                <div class="flex gap-8 pl-2">
                     <!-- Левая часть -->
                     <div class="flex flex-col gap-5">
                         <h1 class="h1-header">{{ $master->full_name }}</h1>

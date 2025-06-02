@@ -24,4 +24,9 @@ class WorkingShift extends Model
     {
         return $this->belongsTo(Workshop::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 } 

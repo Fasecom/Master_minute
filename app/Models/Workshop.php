@@ -22,4 +22,24 @@ class Workshop extends Model
         'open_time',
         'close_time',
     ];
+
+    public function workingShifts()
+    {
+        return $this->hasMany(WorkingShift::class);
+    }
+
+    public function currentEmployee()
+    {
+        // Получаем смену на сегодня (берём первую найденную)
+        $currentShift = $this->workingShifts()
+            ->whereDate('date', date('Y-m-d'))
+            ->first();
+
+        return $currentShift ? $currentShift->user : null;
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'service_workshop', 'workshop_id', 'service_id');
+    }
 } 

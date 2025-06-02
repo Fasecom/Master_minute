@@ -1,48 +1,26 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Phone Number -->
-        <div>
-            <x-input-label for="phone" :value="__('Телефон')" />
-            <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autofocus autocomplete="tel" placeholder="+7 999 123 45 67" />
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+    <div class="flex justify-center items-center min-h-screen w-full bg-white">
+        <div class="flex flex-row w-[800px] h-[380px] bg-transparent rounded-[20px] overflow-hidden"
+             style="box-shadow: 0px 5px 27.2px 0px rgba(46, 69, 85, 0.25);">
+            <!-- Левая панель -->
+            <form method="POST" action="{{ route('login') }}" class="flex flex-col bg-white w-1/2 p-8 gap-4" style="min-width:320px;">
+                @csrf
+                <div class="flex flex-col gap-2">
+                    <label for="phone" class="h3-point">Телефон</label>
+                    <input id="phone" name="phone" type="tel" placeholder="login" class="input-header w-full" value="{{ old('phone') }}" required autofocus autocomplete="tel">
+                    @error('phone')<div class="text-red-500 text-sm mt-[-10px] mb-2">{{ $message }}</div>@enderror
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="password" class="h3-point">Пароль</label>
+                    <input id="password" name="password" type="password" placeholder="****************" class="input-header w-full" required autocomplete="current-password">
+                    @error('password')<div class="text-red-500 text-sm mt-[-10px] mb-2">{{ $message }}</div>@enderror
+                </div>
+                <button type="submit" class="btn-leval1 w-full mt-[70px]">Войти</button>
+            </form>
+            <!-- Правая панель -->
+            <div class="flex flex-col bg-[#234E9B] w-1/2 h-full p-8" style="min-width:320px; border-radius: 20px;">
+                <span class="h1-header text-white">Вход</span>
+            </div>
         </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" 
-                            placeholder="••••••••"/>
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </x-guest-layout>

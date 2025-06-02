@@ -21,7 +21,7 @@
                 @foreach ($masters as $master)
                     @php
                         $fio = collect(explode(' ', $master->full_name))->take(2)->implode(' ');
-                        $shift = $master->workingShifts()->orderByDesc('date')->first();
+                        $shift = $master->workingShifts()->whereDate('date', date('Y-m-d'))->first();
                         $workshopName = $shift && $shift->workshop ? $shift->workshop->name : 'Нет смены';
                     @endphp
                     <div class="flex flex-col justify-between rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 bg-white min-w-[400px] max-w-none min-[1271px]:max-w-[400px] flex-1 basis-[400px] h-[140px]">

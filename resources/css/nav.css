@@ -29,4 +29,20 @@
 }
 .custom-nav-link:hover {
     color: #2B3F63;
+}
+
+.custom-nav-link-compact {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: #234E9B;
+    font-weight: 600;
+    transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 8px;
+    height: auto;
+    background: none;
+}
+.custom-nav-link-compact:hover {
+    color: #2B3F63;
 } 

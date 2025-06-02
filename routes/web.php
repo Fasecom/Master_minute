@@ -72,7 +72,66 @@ Route::middleware('auth')->group(function () {
     Route::post('/shops/delete/{id}', [\App\Http\Controllers\ShopController::class, 'delete'])->name('shops.delete');
     Route::get('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesEdit'])->name('shops.services.edit');
     Route::post('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesUpdate'])->name('shops.services.update');
-    Route::view('/schedule', 'schedule.index')->name('schedule');
+    Route::get('/schedule', function (\Illuminate\Http\Request $request) {
+        $monthYear = $request->input('month_year', now()->format('Y-m'));
+        $page = max(1, (int)$request->input('page', 1));
+        $perPage = 5; // Количество точек на страницу
+
+        // Получаем год и месяц
+        [$year, $month] = explode('-', $monthYear);
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $dates = collect(range(1, $daysInMonth))->map(function($day) use ($year, $month) {
+            $date = \Carbon\Carbon::create($year, $month, $day);
+            return [
+                'date' => $date->toDateString(),
+                'day' => $day,
+                'weekday' => mb_substr(__('custom.weekdays_short.'.$date->dayOfWeek), 0, 2),
+                'is_weekend' => in_array($date->dayOfWeek, [0, 6]), // 0 - вс, 6 - сб
+            ];
+        });
+
+        // Все точки
+        $allWorkshops = \App\Models\Workshop::whereNull('close_date')->get();
+        $totalPages = ceil($allWorkshops->count() / $perPage);
+        $workshops = $allWorkshops->slice(($page-1)*$perPage, $perPage)->values();
+
+        // Получаем смены за месяц для выбранных точек
+        $shiftQuery = \App\Models\WorkingShift::with(['user', 'workshop'])
+            ->whereYear('date', $year)
+            ->whereMonth('date', $month)
+            ->whereIn('workshop_id', $workshops->pluck('id'));
+        $shifts = $shiftQuery->get();
+
+        // Группируем смены по точке и дате
+        $shiftsByWorkshopDate = [];
+        foreach ($shifts as $shift) {
+            $shiftsByWorkshopDate[$shift->workshop_id][$shift->date->format('Y-m-d')] = $shift;
+        }
+
+        // Итоги по точкам и общий итог
+        $totals = [];
+        $grandTotal = 0;
+        foreach ($workshops as $workshop) {
+            $total = $shifts->where('workshop_id', $workshop->id)->sum(function($s) {
+                return $s->cash_revenue + $s->cashless_revenue;
+            });
+            $totals[$workshop->id] = $total;
+            $grandTotal += $total;
+        }
+
+        // Для фильтров (оставляем как было)
+        $mastersOptions = \App\Models\User::where('role_id', 3)
+            ->whereNull('work_end_date')
+            ->get(['id', 'full_name'])
+            ->map(fn($m) => ['id' => $m->id, 'name' => $m->full_name])->toArray();
+        $shopsOptions = \App\Models\Workshop::all(['id', 'name'])
+            ->map(fn($s) => ['id' => $s->id, 'name' => $s->name])->toArray();
+
+        return view('schedule.index', compact(
+            'mastersOptions', 'shopsOptions',
+            'workshops', 'dates', 'shiftsByWorkshopDate', 'totals', 'grandTotal', 'page', 'totalPages', 'monthYear', 'year', 'month'
+        ));
+    })->name('schedule');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -16,7 +16,7 @@
             <div class="flex flex-col gap-5 bg-white rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 md:p-[20px] min-h-[340px] w-full mb-5">
                 <div class="flex gap-8 pl-2">
                     <!-- Левая часть -->
-                    <div class="flex flex-col gap-5">
+                    <div class="flex flex-col gap-5 pl-2 w-1/2">
                         <h1 class="h1-header">{{ $master->full_name }}</h1>
                         <ul class="flex flex-col gap-2">
                             <!-- Пункты -->
@@ -58,10 +58,21 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- Правая часть (место под график) -->
-                    <div class="min-w-[260px] max-w-[320px] flex items-center justify-center">
-                        <!-- Здесь будет график -->
+                    <div class="flex flex-col gap-5 pl-2" >
+                        <img src="/img/AnlShops.svg" alt="">
                     </div>
+                    <!-- Правая часть (график не нужен) -->
+                </div>
+                <div>
+                    <ul class="flex flex-col gap-2">
+                        <!-- Пункты -->
+                        <li class="flex items-center gap-2">
+                            <img src="/img/icon/chart-histogram.svg" alt="place" width="23" height="23">
+                            <h3 class="h3-point">Статистика</h3>
+                        </li>
+                    </ul>
+                    <img src="/img/BigAnlShops.svg" alt="">
+                </div>
                 </div>
                 <div class="flex justify-end">
                     <a href="{{ route('masters.edit', $master->id) }}" class="btn-leval4 btn-blue flex items-center gap-2"><img src="/img/icon/pencil.svg" alt="Редактировать" width="20" height="20"></a>

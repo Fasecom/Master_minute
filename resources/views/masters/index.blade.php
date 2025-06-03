@@ -4,7 +4,7 @@
             <div class="flex flex-wrap items-center justify-between">
                 <h1 class="h1-header">Мастера</h1>
                 <div class="flex items-center gap-4 ml-auto">
-                    <button class="btn-leval1 w-[150px] sm:w-[300px]">Аналитика</button>
+                    <!-- <button class="btn-leval1 w-[150px] sm:w-[300px]">Аналитика</button> -->
                     <a href="{{ route('masters.add') }}" class="btn-leval1 flex items-center justify-center w-[65px] h-[44px] rounded-full p-0" style="min-width:65px;min-height:44px;">
                         <img src="/img/icon/plus.svg" alt="Добавить" width="24" height="24">
                     </a>

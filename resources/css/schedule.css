@@ -1,0 +1,299 @@
+/* Стили для таблицы смен */
+.calendar {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 90px;
+    flex-shrink: 0;
+}
+
+.calendar .date {
+    height: 90px;
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar .date .day {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 90%;
+    color: #2E4555;
+}
+
+.calendar .date .weekday {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 90%;
+    color: #2E4555;
+}
+
+.calendar .red .day,
+.calendar .red .weekday {
+    color: #E31E24;
+}
+
+.calendar .page-flipper {
+    height: 90px;
+    width: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shift-column {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+    width: 150px;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+.shift-column .sc-header {
+    height: 90px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shift-column .sc-header .name {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: #2E4555;
+    text-align: left;
+}
+
+.shift-column .sc-header .work-time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-align: left;
+}
+
+.shift-column .sc-header .work-time .time-text {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #2E4555;
+}
+
+.shift-column .shifts {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+
+.shift-column .shifts-card {
+    width: 100%;
+    height: 100%;
+    padding: 3px 8px;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shift-column .shifts-card .master-name {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.shift-column .shifts-card .revenue {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+/* Разные виды смен */
+
+.shift-column .shifts-upper {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 2px 0 2px;
+}
+
+.shifts-upper .shifts-card {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.shift-column .shifts-lower {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px 2px 2px;
+}
+
+.shift-column .shifts-between {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px 0 2px;
+}
+
+.shifts-between .shifts-card {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    flex-direction: column-reverse;
+}
+
+.shifts-lower .shifts-card {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    flex-direction: column-reverse;
+}
+
+.shifts-lower .shifts-card .master-name,
+.shifts-between .shifts-card .master-name {
+    display: none;
+}
+
+.total {
+    height: 90px;
+    padding: 3px 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.total .name {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    color: #2E4555;
+    text-align: left;
+}
+
+.total .total-revenue {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #2E4555;
+    text-align: left;
+}
+
+.total .revenue {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    text-align: right;
+}
+
+.result { 
+    padding-left: 6px;
+    border-top: 2px solid #234E9B;
+}
+
+.result .result-total {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #2E4555;
+    text-align: left;
+}
+
+.result .result-total-revenue {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    color: #2E4555;
+    text-align: right;
+    padding-left: 6px;
+}
+
+/* Стили для таблицы с горизонтальными линиями */
+.horizontal-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.horizontal-lines table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.horizontal-lines td {
+    height: 90px;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.horizontal-lines td:first-child {
+    width: 90px;
+}
+
+.horizontal-lines tr:last-child td {
+    border-bottom: none;
+}
+
+/* Стили для вертикальных линий */
+.horizontal-lines tr:first-child td,
+.horizontal-lines tr:last-child td {
+    border-right: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.horizontal-lines tr:first-child td:last-child,
+.horizontal-lines tr:last-child td:last-child {
+    border-right: none;
+}
+
+.base {
+    position: relative;
+}
+
+.page-flipper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    height: 90px;
+    width: 90px;
+}
+
+.flipper-arrow {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #234E9B;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.flipper-arrow:hover {
+    color: #2E4555;
+}
+
+.flipper-number {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    color: #234E9B;
+    min-width: 32px;
+    text-align: center;
+    user-select: none;
+}

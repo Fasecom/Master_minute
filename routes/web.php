@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/shops/delete/{id}', [\App\Http\Controllers\ShopController::class, 'delete'])->name('shops.delete');
     Route::get('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesEdit'])->name('shops.services.edit');
     Route::post('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesUpdate'])->name('shops.services.update');
-    Route::view('/schedule', 'schedule.index')->name('schedule');
+    Route::get('/schedule', [\App\Http\Controllers\WorkingShiftController::class, 'index'])->name('schedule');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

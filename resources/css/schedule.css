@@ -89,7 +89,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2px;
+    padding: 3px;
 }
 
 .shift-column .shifts-card {
@@ -126,7 +126,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 2px 2px 0 2px;
+    padding: 3px 3px 0 3px;
 }
 
 .shifts-upper .shifts-card {
@@ -139,7 +139,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 2px 2px 2px;
+    padding: 0 3px 3px 3px;
 }
 
 .shift-column .shifts-between {
@@ -147,7 +147,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 2px 0 2px;
+    padding: 0 3px 0 3px;
 }
 
 .shifts-between .shifts-card {
@@ -242,6 +242,7 @@
 .horizontal-lines td {
     height: 90px;
     border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    border-right: 1px dashed rgba(0, 0, 0, 0.1);
 }
 
 .horizontal-lines td:first-child {
@@ -250,6 +251,10 @@
 
 .horizontal-lines tr:last-child td {
     border-bottom: none;
+}
+
+.horizontal-lines td:last-child {
+    border-right: none;
 }
 
 /* Стили для вертикальных линий */

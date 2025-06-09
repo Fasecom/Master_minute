@@ -25,7 +25,6 @@ return new class extends Migration
         // Василий Иван Сергеевич (ID: 3) - график 2/2
         // Имеет все навыки, может работать в любой мастерской
         DB::table('working_shifts')->insert([
-            // Понедельник
             [
                 'user_id' => 3,
                 'workshop_id' => 1, // ТРЦ Фокус
@@ -33,7 +32,6 @@ return new class extends Migration
                 'cashless_revenue' => 0,
                 'date' => $startDate . ' 09:00:00'
             ],
-            // Вторник
             [
                 'user_id' => 3,
                 'workshop_id' => 1,
@@ -41,110 +39,106 @@ return new class extends Migration
                 'cashless_revenue' => 0,
                 'date' => date('Y-m-d', strtotime($startDate . ' +1 day')) . ' 09:00:00'
             ],
-            // Пятница
             [
                 'user_id' => 3,
                 'workshop_id' => 1,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 3,
+                'workshop_id' => 2,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 3,
+                'workshop_id' => 2,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
                 'date' => date('Y-m-d', strtotime($startDate . ' +4 day')) . ' 09:00:00'
             ],
-            // Суббота
-            [
-                'user_id' => 3,
-                'workshop_id' => 1,
-                'cash_revenue' => 0,
-                'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +5 day')) . ' 09:00:00'
-            ],
         ]);
-
-        // Петров Александр Николаевич (ID: 4) - график 5/2
-        // Имеет все навыки, может работать в любой мастерской
         DB::table('working_shifts')->insert([
-            // Понедельник
             [
                 'user_id' => 4,
                 'workshop_id' => 2, // ТРЦ Фиеста
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => $startDate . ' 10:00:00'
+                'date' => $startDate . ' 09:00:00'
             ],
-            // Вторник
             [
                 'user_id' => 4,
                 'workshop_id' => 2,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +1 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +1 day')) . ' 09:00:00'
             ],
-            // Среда
             [
                 'user_id' => 4,
                 'workshop_id' => 2,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 09:00:00'
             ],
-            // Четверг
             [
                 'user_id' => 4,
-                'workshop_id' => 2,
+                'workshop_id' => 1,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 09:00:00'
             ],
-            // Пятница
             [
                 'user_id' => 4,
-                'workshop_id' => 2,
+                'workshop_id' => 1,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +4 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +4 day')) . ' 09:00:00'
             ],
         ]);
-
-        // Смирнова Елена Петровна (ID: 5) - график 2/2
-        // Имеет все навыки, может работать в любой мастерской
         DB::table('working_shifts')->insert([
-            // Среда
-            [
-                'user_id' => 5,
-                'workshop_id' => 3, // ТРЦ Горки
-                'cash_revenue' => 0,
-                'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 10:00:00'
-            ],
-            // Четверг
             [
                 'user_id' => 5,
                 'workshop_id' => 3,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 09:00:00'
             ],
-            // Воскресенье
             [
                 'user_id' => 5,
                 'workshop_id' => 3,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +6 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 5,
+                'workshop_id' => 1,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +5 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 5,
+                'workshop_id' => 1,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +6 day')) . ' 09:00:00'
             ],
         ]);
 
-        // Козлов Дмитрий Иванович (ID: 6) - график 2/2
-        // Имеет только базовые навыки, работает в мастерских с базовыми услугами
+        // Иванов Иван Иванович (ID: 6) - график 2/2
+        // Специализируется на ремонте одежды
         DB::table('working_shifts')->insert([
-            // Понедельник
             [
                 'user_id' => 6,
-                'workshop_id' => 4, // ТРЦ Алое Поле
+                'workshop_id' => 4, // ТРЦ Мега
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
                 'date' => $startDate . ' 09:00:00'
             ],
-            // Вторник
             [
                 'user_id' => 6,
                 'workshop_id' => 4,
@@ -152,7 +146,20 @@ return new class extends Migration
                 'cashless_revenue' => 0,
                 'date' => date('Y-m-d', strtotime($startDate . ' +1 day')) . ' 09:00:00'
             ],
-            // Пятница
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 09:00:00'
+            ],
             [
                 'user_id' => 6,
                 'workshop_id' => 4,
@@ -160,7 +167,6 @@ return new class extends Migration
                 'cashless_revenue' => 0,
                 'date' => date('Y-m-d', strtotime($startDate . ' +4 day')) . ' 09:00:00'
             ],
-            // Суббота
             [
                 'user_id' => 6,
                 'workshop_id' => 4,
@@ -168,190 +174,194 @@ return new class extends Migration
                 'cashless_revenue' => 0,
                 'date' => date('Y-m-d', strtotime($startDate . ' +5 day')) . ' 09:00:00'
             ],
-        ]);
-
-        // Новикова Анна Сергеевна (ID: 7) - график 5/2
-        // Имеет только базовые навыки, работает в мастерских с базовыми услугами
-        DB::table('working_shifts')->insert([
-            // Понедельник
             [
-                'user_id' => 7,
-                'workshop_id' => 5, // ТРЦ Родник
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => $startDate . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +6 day')) . ' 09:00:00'
             ],
-            // Вторник
             [
-                'user_id' => 7,
-                'workshop_id' => 5,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +1 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +7 day')) . ' 09:00:00'
             ],
-            // Среда
             [
-                'user_id' => 7,
-                'workshop_id' => 5,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +8 day')) . ' 09:00:00'
             ],
-            // Четверг
             [
-                'user_id' => 7,
-                'workshop_id' => 5,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +9 day')) . ' 09:00:00'
             ],
-            // Пятница
             [
-                'user_id' => 7,
-                'workshop_id' => 5,
+                'user_id' => 6,
+                'workshop_id' => 4,     
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +4 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +10 day')) . ' 09:00:00'
             ],
-        ]);
-
-        // Иванов Сергей Петрович (ID: 8) - график 2/2
-        // Имеет только базовые навыки, работает в мастерских с базовыми услугами
-        DB::table('working_shifts')->insert([
-            // Среда
             [
-                'user_id' => 8,
-                'workshop_id' => 6, // ТРЦ Кольцо
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +11 day')) . ' 09:00:00'
             ],
-            // Четверг
             [
-                'user_id' => 8,
-                'workshop_id' => 6,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +12 day')) . ' 09:00:00'
             ],
-            // Воскресенье
             [
-                'user_id' => 8,
-                'workshop_id' => 6,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +6 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +13 day')) . ' 09:00:00'
             ],
-        ]);
-
-        // Соколова Мария Александровна (ID: 9) - график 2/2
-        // Имеет только базовые навыки, работает в мастерских с базовыми услугами
-        DB::table('working_shifts')->insert([
-            // Понедельник
             [
-                'user_id' => 9,
-                'workshop_id' => 1, // ТРЦ Фокус
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => $startDate . ' 09:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +14 day')) . ' 09:00:00'
             ],
-            // Вторник
             [
-                'user_id' => 9,
-                'workshop_id' => 1,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +1 day')) . ' 09:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +15 day')) . ' 09:00:00'
             ],
-            // Пятница
             [
-                'user_id' => 9,
-                'workshop_id' => 1,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +4 day')) . ' 09:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +16 day')) . ' 09:00:00'
             ],
-            // Суббота
             [
-                'user_id' => 9,
-                'workshop_id' => 1,
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +5 day')) . ' 09:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +17 day')) . ' 09:00:00'
             ],
-        ]);
-
-        // Морозов Иван Дмитриевич (ID: 10) - график 5/2
-        // Имеет только базовые навыки, работает в мастерских с базовыми услугами
-        DB::table('working_shifts')->insert([
-            // Понедельник
             [
-                'user_id' => 10,
-                'workshop_id' => 2, // ТРЦ Фиеста
+                'user_id' => 6,
+                'workshop_id' => 4,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => $startDate . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +18 day')) . ' 09:00:00'
             ],
-            // Вторник
             [
-                'user_id' => 10,
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +19 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +20 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +21 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +22 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +23 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +24 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,
+                'date' => date('Y-m-d', strtotime($startDate . ' +25 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
+                'workshop_id' => 4,
+                'cash_revenue' => 0,
+                'cashless_revenue' => 0,    
+                'date' => date('Y-m-d', strtotime($startDate . ' +26 day')) . ' 09:00:00'
+            ],
+            [
+                'user_id' => 6,
                 'workshop_id' => 2,
                 'cash_revenue' => 0,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +1 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +27 day')) . ' 09:00:00'   
             ],
-            // Среда
             [
-                'user_id' => 10,
+                'user_id' => 6,
                 'workshop_id' => 2,
-                'cash_revenue' => 0,
+                'cash_revenue' => 1,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +28 day')) . ' 09:00:00'
             ],
-            // Четверг
             [
-                'user_id' => 10,
+                'user_id' => 6,
                 'workshop_id' => 2,
-                'cash_revenue' => 0,
+                'cash_revenue' => 1,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +29 day')) . ' 09:00:00'
             ],
-            // Пятница
             [
-                'user_id' => 10,
+                'user_id' => 6,
                 'workshop_id' => 2,
-                'cash_revenue' => 0,
+                'cash_revenue' => 1,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +4 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +30 day')) . ' 09:00:00'
             ],
-        ]);
-
-        // Волкова Ольга Николаевна (ID: 11) - график 2/2
-        // Имеет только базовые навыки, работает в мастерских с базовыми услугами
-        DB::table('working_shifts')->insert([
-            // Среда
             [
-                'user_id' => 11,
-                'workshop_id' => 3, // ТРЦ Горки
-                'cash_revenue' => 0,
+                'user_id' => 6,
+                'workshop_id' => 2,
+                'cash_revenue' => 1,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +2 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +31 day')) . ' 09:00:00'
             ],
-            // Четверг
             [
-                'user_id' => 11,
-                'workshop_id' => 3,
-                'cash_revenue' => 0,
+                'user_id' => 6,
+                'workshop_id' => 2,
+                'cash_revenue' => 1,
                 'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +3 day')) . ' 10:00:00'
-            ],
-            // Воскресенье
-            [
-                'user_id' => 11,
-                'workshop_id' => 3,
-                'cash_revenue' => 0,
-                'cashless_revenue' => 0,
-                'date' => date('Y-m-d', strtotime($startDate . ' +6 day')) . ' 10:00:00'
+                'date' => date('Y-m-d', strtotime($startDate . ' +32 day')) . ' 09:00:00'
             ],
         ]);
     }

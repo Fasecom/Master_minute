@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class WorkingShift extends Model
 {
@@ -20,13 +21,19 @@ class WorkingShift extends Model
         'date',
     ];
 
-    public function workshop()
-    {
-        return $this->belongsTo(Workshop::class);
-    }
+    protected $casts = [
+        'date' => 'datetime',
+        'cash_revenue' => 'decimal:2',
+        'cashless_revenue' => 'decimal:2'
+    ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function workshop(): BelongsTo
+    {
+        return $this->belongsTo(Workshop::class);
     }
 } 

@@ -11,11 +11,21 @@
                 </div>
             </div>
             <!-- Нижняя полоса -->
-            <form method="GET" class="flex flex-wrap gap-4 items-center">
-                <x-multiselect-dropdown name="masters" :options="$masters" :selected="request('masters', [])"/>
-                <x-multiselect-dropdown name="shops" :options="$shops" :selected="request('shops', [])"/>
-                <button class="btn-leval1 w-[150px] sm:w-[200px] ml-auto">Применить</button>
-            </form>
+            <div class="flex flex-wrap gap-4 items-center">
+                <x-multiselect-dropdown
+                    name="masters"
+                    :options="$masters"
+                    :selected="$selectedMasters"
+                />
+                <x-multiselect-dropdown
+                    name="shops"
+                    :options="$shops"
+                    :selected="$selectedShops"
+                />
+                <button type="button" class="btn-leval1 w-[150px] sm:w-[200px] ml-auto">
+                    Применить
+                </button>
+            </div>
         </div>
     </x-slot>
     <div class="py-8">
@@ -35,11 +45,25 @@
                     </div>
                     <div class="calendar">
                         <div class="page-flipper">
-                            <button class="flipper-arrow" type="button" {{ $currentPage <= 1 ? 'disabled' : '' }} onclick="window.location='{{ route('schedule', ['month_year' => $monthYear, 'page' => $currentPage - 1]) }}'">
+                            @php
+                                $prevPageParams = array_merge(
+                                    request()->except(['page']),
+                                    ['page' => max(1, $currentPage - 1)]
+                                );
+                                $nextPageParams = array_merge(
+                                    request()->except(['page']),
+                                    ['page' => min($totalPages, $currentPage + 1)]
+                                );
+                            @endphp
+                            <button class="flipper-arrow" type="button" 
+                                {{ $currentPage <= 1 ? 'disabled' : '' }} 
+                                onclick="window.location='{{ route('schedule', $prevPageParams) }}'">
                                 <img src="/img/icon/angle-left.svg" alt="Назад" width="20" height="20">
                             </button>
                             <span class="flipper-number">{{ $currentPage }}</span>
-                            <button class="flipper-arrow" type="button" {{ $currentPage >= $totalPages ? 'disabled' : '' }} onclick="window.location='{{ route('schedule', ['month_year' => $monthYear, 'page' => $currentPage + 1]) }}'">
+                            <button class="flipper-arrow" type="button" 
+                                {{ $currentPage >= $totalPages ? 'disabled' : '' }} 
+                                onclick="window.location='{{ route('schedule', $nextPageParams) }}'">
                                 <img src="/img/icon/angle-right.svg" alt="Вперёд" width="20" height="20">
                             </button>
                         </div>

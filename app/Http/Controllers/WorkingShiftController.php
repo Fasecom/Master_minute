@@ -25,13 +25,16 @@ class WorkingShiftController extends Controller
         $startDate = Carbon::parse($monthYear)->startOfMonth();
         $endDate = Carbon::parse($monthYear)->endOfMonth();
         
+        // Получаем и валидируем параметры фильтрации
+        $selectedMasters = $request->input('masters', []);
+        $selectedMasters = is_array($selectedMasters) ? $selectedMasters : [];
+        
+        $selectedShops = $request->input('shops', []);
+        $selectedShops = is_array($selectedShops) ? $selectedShops : [];
+        
         // Пагинация для торговых точек
         $workshopsPerPage = 7;
-        $totalWorkshops = Workshop::count();
-        $totalPages = ceil($totalWorkshops / $workshopsPerPage);
-        $currentPage = $request->input('page', 1);
-        $offset = ($currentPage - 1) * $workshopsPerPage;
-
+        
         // Получаем список мастеров и мастерских для фильтров
         $masters = User::where('role_id', 3)
             ->whereNull('work_end_date')
@@ -43,32 +46,53 @@ class WorkingShiftController extends Controller
             
         $shops = Workshop::whereNull('close_date')
             ->get(['id', 'name']);
-
-        // Применяем фильтры
-        $query = WorkingShift::with(['user', 'workshop'])
-            ->whereBetween('date', [$startDate, $endDate]);
-
-        if ($request->has('masters')) {
-            $query->whereIn('user_id', $request->input('masters'));
+            
+        // Применяем фильтры к мастерским
+        $workshopsQuery = Workshop::whereNull('close_date');
+        
+        // Если выбраны конкретные мастерские
+        if (!empty($selectedShops)) {
+            $workshopsQuery->whereIn('id', $selectedShops);
         }
-
-        if ($request->has('shops')) {
-            $query->whereIn('workshop_id', $request->input('shops'));
+        
+        // Если выбраны конкретные мастера, показываем только мастерские, где они работают
+        if (!empty($selectedMasters)) {
+            $workshopsQuery->whereIn('id', function($query) use ($selectedMasters, $startDate, $endDate) {
+                $query->select('workshop_id')
+                    ->from('working_shifts')
+                    ->whereIn('user_id', $selectedMasters)
+                    ->whereBetween('date', [$startDate, $endDate])
+                    ->distinct();
+            });
         }
-
-        $shifts = $query->get()
+        
+        // Получаем общее количество отфильтрованных мастерских
+        $totalWorkshops = $workshopsQuery->count();
+        $totalPages = max(1, ceil($totalWorkshops / $workshopsPerPage));
+        $currentPage = min($request->input('page', 1), $totalPages);
+        $offset = ($currentPage - 1) * $workshopsPerPage;
+        
+        // Получаем отфильтрованные мастерские с пагинацией
+        $workshops = $workshopsQuery->skip($offset)->take($workshopsPerPage)->get();
+        
+        // Получаем ID всех отображаемых мастерских
+        $displayedWorkshopIds = $workshops->pluck('id')->toArray();
+        
+        // Применяем фильтры к сменам
+        $shiftsQuery = WorkingShift::with(['user', 'workshop'])
+            ->whereBetween('date', [$startDate, $endDate])
+            ->whereIn('workshop_id', $displayedWorkshopIds);
+            
+        if (!empty($selectedMasters)) {
+            $shiftsQuery->whereIn('user_id', $selectedMasters);
+        }
+        
+        $shifts = $shiftsQuery->get()
             ->map(function ($shift) {
                 $shift->user->formatted_name = $this->formatFullName($shift->user->full_name);
                 return $shift;
             })
             ->groupBy('workshop_id');
-
-        // Получаем мастерские с учетом фильтров
-        $workshopsQuery = Workshop::query();
-        if ($request->has('shops')) {
-            $workshopsQuery->whereIn('id', $request->input('shops'));
-        }
-        $workshops = $workshopsQuery->skip($offset)->take($workshopsPerPage)->get();
 
         // Формируем массив дней месяца
         $days = [];
@@ -93,7 +117,9 @@ class WorkingShiftController extends Controller
             'currentPage', 
             'totalPages',
             'masters',
-            'shops'
+            'shops',
+            'selectedMasters',
+            'selectedShops'
         ));
     }
 } 

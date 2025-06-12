@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\WorkingShift;
 use App\Models\Workshop;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -31,16 +32,43 @@ class WorkingShiftController extends Controller
         $currentPage = $request->input('page', 1);
         $offset = ($currentPage - 1) * $workshopsPerPage;
 
-        $workshops = Workshop::skip($offset)->take($workshopsPerPage)->get();
-        
-        $shifts = WorkingShift::with(['user', 'workshop'])
-            ->whereBetween('date', [$startDate, $endDate])
-            ->get()
+        // Получаем список мастеров и мастерских для фильтров
+        $masters = User::where('role_id', 3)
+            ->whereNull('work_end_date')
+            ->get(['id', 'full_name'])
+            ->map(function($master) {
+                $master->name = $this->formatFullName($master->full_name);
+                return $master;
+            });
+            
+        $shops = Workshop::whereNull('close_date')
+            ->get(['id', 'name']);
+
+        // Применяем фильтры
+        $query = WorkingShift::with(['user', 'workshop'])
+            ->whereBetween('date', [$startDate, $endDate]);
+
+        if ($request->has('masters')) {
+            $query->whereIn('user_id', $request->input('masters'));
+        }
+
+        if ($request->has('shops')) {
+            $query->whereIn('workshop_id', $request->input('shops'));
+        }
+
+        $shifts = $query->get()
             ->map(function ($shift) {
                 $shift->user->formatted_name = $this->formatFullName($shift->user->full_name);
                 return $shift;
             })
             ->groupBy('workshop_id');
+
+        // Получаем мастерские с учетом фильтров
+        $workshopsQuery = Workshop::query();
+        if ($request->has('shops')) {
+            $workshopsQuery->whereIn('id', $request->input('shops'));
+        }
+        $workshops = $workshopsQuery->skip($offset)->take($workshopsPerPage)->get();
 
         // Формируем массив дней месяца
         $days = [];
@@ -57,6 +85,15 @@ class WorkingShiftController extends Controller
             $currentDate->addDay();
         }
 
-        return view('schedule.index', compact('workshops', 'shifts', 'monthYear', 'days', 'currentPage', 'totalPages'));
+        return view('schedule.index', compact(
+            'workshops', 
+            'shifts', 
+            'monthYear', 
+            'days', 
+            'currentPage', 
+            'totalPages',
+            'masters',
+            'shops'
+        ));
     }
 } 

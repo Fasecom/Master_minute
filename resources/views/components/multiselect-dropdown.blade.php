@@ -5,7 +5,7 @@
     elseif ($name === 'shops') $placeholder = 'Точка...';
 @endphp
 <div class="relative" x-data="{ open: false, selected: @js($selected), options: @js($options) }">
-    <button type="button" class="input-header flex items-center gap-2 min-w-[340px] pl-4 pr-3 py-2 relative" @click="open = !open">
+    <button type="button" class="input-header flex items-center gap-2 w-[300px] pl-4 pr-3 py-2 relative" @click="open = !open">
         <span x-text="
             selected.length === 0
                 ? @js($placeholder)
@@ -25,10 +25,10 @@
         "></span>
         <svg class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
     </button>
-    <div x-show="open" @click.outside="open = false" class="absolute z-50 mt-2 bg-white rounded-md shadow-lg p-4 min-w-[800px] max-w-[1000px] max-h-60 overflow-y-auto" style="display: block;">
+    <div x-show="open" @click.outside="open = false" class="absolute z-50 mt-2 bg-white rounded-md shadow-lg p-4 w-[300px] max-h-60 overflow-y-auto" style="display: block;">
         <template x-for="option in options" :key="option.id">
             <label class="flex items-center gap-2 py-1 cursor-pointer">
-                <input type="checkbox" :value="option.id" x-model="selected" class="">
+                <input type="checkbox" :value="option.id" x-model="selected" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                 <span x-text="option.name"></span>
             </label>
         </template>

@@ -5,7 +5,6 @@
             <div class="flex flex-wrap items-center justify-between gap-4">
                 <h1 class="h1-header">График смен</h1>
                 <div class="flex items-center gap-2 ml-auto">
-                    <x-month-year-picker name="month_year" :value="$monthYear" />
                     <a href="{{ route('masters.add') }}" class="btn-leval1 flex items-center justify-center w-[44px] h-[44px] rounded-full p-0 ml-2" style="min-width:44px;min-height:44px;">
                         <img src="/img/icon/pencil.svg" alt="Редактировать" width="24" height="24">
                     </a>
@@ -13,9 +12,9 @@
             </div>
             <!-- Нижняя полоса -->
             <form method="GET" class="flex flex-wrap gap-4 items-center">
-                <x-multiselect-dropdown name="masters"/>
-                <x-multiselect-dropdown name="shops"/>
-                <button class="btn-leval1 w-[150px] sm:w-[300px] ml-auto">Внести выручку</button>
+                <x-multiselect-dropdown name="masters" :options="$masters" :selected="request('masters', [])"/>
+                <x-multiselect-dropdown name="shops" :options="$shops" :selected="request('shops', [])"/>
+                <button class="btn-leval1 w-[150px] sm:w-[200px] ml-auto">Применить</button>
             </form>
         </div>
     </x-slot>

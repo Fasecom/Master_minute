@@ -5,7 +5,8 @@
             <div class="flex flex-wrap items-center justify-between gap-4">
                 <h1 class="h1-header">График смен</h1>
                 <div class="flex items-center gap-2 ml-auto">
-                    <a href="{{ route('masters.add') }}" class="btn-leval1 flex items-center justify-center w-[44px] h-[44px] rounded-full p-0 ml-2" style="min-width:44px;min-height:44px;">
+                    <x-month-year-picker />
+                    <a href="{{ route('masters.add') }}" class="btn-leval1 flex items-center justify-center w-[70px] h-[44px] rounded-full p-0 ml-2" style="min-width:44px;min-height:44px;">
                         <img src="/img/icon/pencil.svg" alt="Редактировать" width="24" height="24">
                     </a>
                 </div>

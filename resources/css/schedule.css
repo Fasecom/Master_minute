@@ -302,3 +302,26 @@
     text-align: center;
     user-select: none;
 }
+
+/* --- Month & Year picker --- */
+.schedule-month-btn {
+    flex: 1 1 calc(33.333% - 8px); /* 3 per row with gap */
+    background: #F3F3F3;
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 12px;
+    padding: 6px 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border: none;
+}
+.schedule-month-btn:hover {
+    background: #E5E7EB;
+}
+.schedule-month-btn.selected {
+    background: #234E9B;
+    color: #ffffff;
+}

@@ -1,27 +1,44 @@
-@props(['name' => 'month_year', 'value' => null])
+@props(['initialMonth' => date('n'), 'initialYear' => date('Y')])
 @php
-    $months = [
-        1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель', 5 => 'Май', 6 => 'Июнь',
-        7 => 'Июль', 8 => 'Август', 9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'
-    ];
-    $currentYear = date('Y');
-    $selected = $value ? explode('-', $value) : [date('Y'), date('m')];
+    $monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 @endphp
-<style>
-    .month-year-select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background: none; }
-    .month-year-select option { padding-right: 24px; }
-    /* Больше не скрываем стрелки у input[type=number].year-input */
-</style>
-<div class="relative">
-    <div class="flex items-center bg-[#f3f3f3] rounded-[65px] px-6 py-2 min-w-[220px] gap-2 input-header" style="height:45px;">
-        <img src="/img/icon/calendar.svg" alt="Календарь" class="w-5 h-5">
-        <select name="month" class="month-year-select bg-transparent outline-none border-none focus:ring-0 p-0 m-0 text-[#2E4555] font-semibold" style="min-width:90px;" x-data x-init="$el.value='{{ (int)($selected[1] ?? date('m')) }}'">
-            @foreach($months as $num => $name)
-                <option value="{{ $num }}" @if((int)($selected[1] ?? date('m')) === $num) selected @endif>{{ $name }}</option>
-            @endforeach
-        </select>
-        <input type="number" name="year" min="2000" max="2100" maxlength="4" class="year-input bg-transparent outline-none border-none focus:ring-0 w-[80px] text-[#2E4555] font-semibold" value="{{ $selected[0] ?? date('Y') }}" oninput="if(this.value.length>4)this.value=this.value.slice(0,4);this.value=this.value.replace(/[^0-9]/g,'');">
-        <span class="text-[#2E4555]">г</span>
+<div class="relative"
+     x-data="{
+        open: false,
+        month: {{ $initialMonth }},
+        year: {{ $initialYear }},
+        months: @js($monthNames),
+        monthName(i) { return this.months[i - 1]; },
+        display() { return this.monthName(this.month) + ' ' + this.year; }
+     }"
+>
+    <!-- Main button -->
+    <button type="button" class="input-header flex items-center gap-2 w-[240px] pl-4 pr-10 py-2 relative" @click="open = !open">
+        <img src="/img/icon/calendar.svg" alt="Календарь" class="w-5 h-5 flex-shrink-0">
+        <span class="ml-1" x-text="monthName(month)"></span>
+        <span class="ml-auto mr-4" x-text="year"></span>
+        <svg class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+    </button>
+    <!-- Dropdown -->
+    <div x-show="open" @click.outside="open = false" class="absolute z-50 mt-2 bg-white rounded-md shadow-lg p-4 w-[307px]" style="display: none;">
+        <!-- Year navigation -->
+        <div class="flex items-center justify-between mb-3">
+            <button type="button" @click="year--" class="year-arrow">
+                <img src="/img/icon/angle-left.svg" alt="Предыдущий год" width="20" height="20">
+            </button>
+            <span x-text="year" class="text-lg font-semibold"></span>
+            <button type="button" @click="year++" class="year-arrow">
+                <img src="/img/icon/angle-right.svg" alt="Следующий год" width="20" height="20">
+            </button>
+        </div>
+        <!-- Months grid -->
+        <div class="flex flex-wrap gap-2">
+            <template x-for="(m, idx) in months" :key="idx">
+                <button type="button"
+                    @click="month = idx + 1;"
+                    :class="{'selected': idx + 1 === month}"
+                    class="schedule-month-btn" x-text="m"></button>
+            </template>
+        </div>
     </div>
-    <input type="hidden" name="{{ $name }}" :value="`${$el.querySelector('select').value}-${$el.querySelector('input[type=number]').value}`">
 </div> 

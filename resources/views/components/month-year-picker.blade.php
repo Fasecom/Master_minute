@@ -2,15 +2,17 @@
 @php
     $monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 @endphp
-<div class="relative"
+<div class="relative" wire:ignore
      x-data="{
         open: false,
         month: {{ $initialMonth }},
         year: {{ $initialYear }},
         months: @js($monthNames),
         monthName(i) { return this.months[i - 1]; },
-        display() { return this.monthName(this.month) + ' ' + this.year; }
+        display() { return this.monthName(this.month) + ' ' + this.year; },
+        prevState() { return {month: this.month, year: this.year}; }
      }"
+     @click.outside="if(open){ open=false; $dispatch('month-year-closed', {month: month, year: year}); }"
 >
     <!-- Main button -->
     <button type="button" class="input-header flex items-center gap-2 w-[240px] pl-4 pr-10 py-2 relative" @click="open = !open">

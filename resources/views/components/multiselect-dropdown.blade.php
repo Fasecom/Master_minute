@@ -5,7 +5,7 @@
     elseif ($name === 'shops') $placeholder = 'Точка...';
     $selected = array_map('strval', $selected);
 @endphp
-<div class="relative"
+<div class="relative" wire:ignore
     x-data="{
         open: false,
         tempSelected: @js($selected),
@@ -24,8 +24,20 @@
                 }
             }
             return selectedOptions.length === 1 ? display : display + ' ...';
+        },
+        init() {
+            // Синхронизация начального состояния с Livewire
+            this.$watch('tempSelected', value => {
+                this.$wire.set('{{ $name === 'masters' ? 'selectedMasters' : 'selectedShops' }}', value);
+            });
+            // Синхронизация при изменении options (Livewire обновляет options, Alpine должен их принять)
+            this.$watch('options', value => {
+                // Удаляем из tempSelected те id, которых больше нет в options
+                this.tempSelected = this.tempSelected.filter(id => value.some(o => o.id.toString() === id));
+            });
         }
     }"
+    x-init="init()"
 >
     <button type="button" class="input-header flex items-center gap-2 w-[300px] pl-4 pr-3 py-2 relative" @click="open = !open">
         <span x-text="getDisplayText()"></span>

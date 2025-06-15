@@ -18,7 +18,7 @@ use App\Models\Workshop;
 */
 
 Route::get('/', function () {
-    return redirect()->route('masters');
+    return redirect()->route('schedule');
 });
 
 Route::middleware('auth')->group(function () {
@@ -80,6 +80,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsEdit'])->name('masters.skills.edit');
     Route::post('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsUpdate'])->name('masters.skills.update');
+    Route::get('/schedule/revenue/add', [\App\Http\Controllers\WorkingShiftController::class, 'addRevenueForm'])->name('schedule.revenue.add');
+    Route::post('/schedule/revenue/add', [\App\Http\Controllers\WorkingShiftController::class, 'storeRevenue'])->name('schedule.revenue.store');
+    Route::get('/schedule/edit', function () {
+        return view('schedule.edit');
+    })->name('schedule.edit');
 });
 
 require __DIR__.'/auth.php';

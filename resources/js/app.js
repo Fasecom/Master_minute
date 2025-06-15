@@ -1,6 +1,7 @@
 import './bootstrap';
 import { initPhoneFormatter } from './phone-formatter';
 import { initMastersSearch } from './masters-search';
+import './schedule-edit';
 
 import Alpine from 'alpinejs';
 

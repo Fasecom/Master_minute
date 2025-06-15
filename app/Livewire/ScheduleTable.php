@@ -17,11 +17,11 @@ class ScheduleTable extends Component
 
     public int $currentPage = 1;
 
-    private int $workshopsPerPage = 7;
-
     // Списки для фильтров
     public $masters;
     public $shops;
+
+    private int $workshopsPerPage = 7;
 
     protected $listeners = [
         'monthYearUpdated' => 'onMonthYear',

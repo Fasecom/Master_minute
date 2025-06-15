@@ -122,4 +122,36 @@ class WorkingShiftController extends Controller
             'selectedShops'
         ));
     }
+
+    public function addRevenueForm()
+    {
+        $masters = User::where('role_id', 3)
+            ->whereNull('work_end_date')
+            ->get(['id', 'full_name']);
+        return view('schedule.add', compact('masters'));
+    }
+
+    public function storeRevenue(Request $request)
+    {
+        $user = auth()->user();
+        $isMaster = $user->role_id == 3;
+        $validated = $request->validate([
+            'date' => 'required|date',
+            'cash_revenue' => 'required|numeric|min:0',
+            'cashless_revenue' => 'required|numeric|min:0',
+            'user_id' => $isMaster ? '' : 'required|exists:users,id',
+        ]);
+        $userId = $isMaster ? $user->id : $request->input('user_id');
+        $date = $request->input('date');
+        $shift = WorkingShift::where('user_id', $userId)
+            ->whereDate('date', $date)
+            ->first();
+        if (!$shift) {
+            return back()->withErrors(['date' => 'Смена не найдена для выбранного мастера и даты.'])->withInput();
+        }
+        $shift->cash_revenue = $request->input('cash_revenue');
+        $shift->cashless_revenue = $request->input('cashless_revenue');
+        $shift->save();
+        return redirect()->route('schedule')->with('success', 'Выручка успешно внесена!');
+    }
 } 

@@ -288,9 +288,18 @@
     color: #234E9B;
     cursor: pointer;
     transition: color 0.2s;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .flipper-arrow:hover {
     color: #2E4555;
+}
+
+.flipper-arrow:disabled img {
+    visibility: hidden;
 }
 
 .flipper-number {

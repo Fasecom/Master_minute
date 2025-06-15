@@ -6,6 +6,7 @@ export function initScheduleEdit() {
     let draggedEl = null;
     let sourcePanel = false;
     let dropSuccess = false;
+    let dragFromCellKey = null;
 
     // Разрешаем дроп везде, чтобы событие drop гарантированно срабатывало
     document.addEventListener('dragover', e => {
@@ -21,6 +22,8 @@ export function initScheduleEdit() {
         draggedEl = el;
         sourcePanel = !!el.closest('#masters-panel');
         dropSuccess = false;
+        const parentCell = el.closest('.droppable-cell');
+        dragFromCellKey = parentCell ? parentCell.dataset.cellKey : null;
         e.dataTransfer.setData('text/plain', el.dataset.userId);
         e.dataTransfer.effectAllowed = sourcePanel ? 'copy' : 'move';
         if (!sourcePanel) {
@@ -33,12 +36,15 @@ export function initScheduleEdit() {
         if (!dropSuccess && draggedEl && !sourcePanel) {
             // Удаляем из DOM
             draggedEl.parentElement && draggedEl.parentElement.removeChild(draggedEl);
-            window.Livewire.dispatch('cardRemoved', { userId: draggedEl.dataset.userId });
+            const payload = { userId: draggedEl.dataset.userId };
+            if(dragFromCellKey){ payload.cell = dragFromCellKey; }
+            window.Livewire.dispatch('cardRemoved', payload);
         }
         if (draggedEl) {
             draggedEl.classList.remove('hidden');
         }
         draggedEl = null;
+        dragFromCellKey = null;
     });
 
     // drop на ячейки таблицы

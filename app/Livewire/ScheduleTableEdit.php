@@ -128,10 +128,6 @@ class ScheduleTableEdit extends Component
             $userId = $payload['userId'] ?? null;
         }
         if(!$cell || !$userId) return;
-        // Убираем предыдущую ячейку для этого userId
-        foreach($this->changes as $key => $uid){
-            if($uid == $userId){ unset($this->changes[$key]); }
-        }
         $this->changes[$cell] = (int)$userId;
         session(['schedule.edit.changes' => $this->changes]);
     }
@@ -143,7 +139,10 @@ class ScheduleTableEdit extends Component
             $cell = $payload['cell'] ?? null;
             $userId = $payload['userId'] ?? null;
         }
-        if($cell && isset($this->changes[$cell])) unset($this->changes[$cell]);
+        if($cell){
+            // Помечаем конкретную ячейку как пустую
+            $this->changes[$cell] = null;
+        }
         if(!$cell && $userId){
             // удалить по userId
             foreach($this->changes as $key => $uid){ if($uid == $userId) unset($this->changes[$key]); }

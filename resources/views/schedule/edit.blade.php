@@ -28,7 +28,7 @@
         <div class="flex-1 w-full">
             <livewire:schedule-table-edit />
         </div>
-        <div class="bg-white overflow-auto shadow-xl sm:rounded-lg p-4 w-[210px] mr-8">
+        <div class="bg-white shadow-xl sm:rounded-lg p-4 w-[240px] mr-8" >
             <livewire:masters-panel />
         </div>
     </div>

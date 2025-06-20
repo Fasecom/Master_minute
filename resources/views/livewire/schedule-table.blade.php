@@ -14,6 +14,7 @@
                     </table>
                 </div>
                 <div class="calendar">
+                    @if($totalPages > 1)
                     <div class="page-flipper">
                         <button class="flipper-arrow" type="button" wire:click="goPrevPage" {{ $currentPage <= 1 ? 'disabled' : '' }}>
                             <img src="/img/icon/angle-left.svg" alt="Назад" width="20" height="20">
@@ -23,6 +24,7 @@
                             <img src="/img/icon/angle-right.svg" alt="Вперёд" width="20" height="20">
                         </button>
                     </div>
+                    @endif
 
                     @foreach($days as $day)
                         <div class="date {{ $day['isWeekend'] ? 'red' : '' }}">
@@ -75,7 +77,15 @@
                                         }
                                     @endphp
                                     <div class="{{ $shiftClass }}">
-                                        <div class="shifts-card bg-green-100">
+                                        @php
+                                            $bgColor = $shift->user->color;
+                                            if(!$bgColor){
+                                                $colors = config('master_colors');
+                                                $idx = ($shift->user->id - 1) % count($colors);
+                                                $bgColor = $colors[$idx] ?? '#e5e7eb';
+                                            }
+                                        @endphp
+                                        <div class="shifts-card" style="background-color: {{ $bgColor }};">
                                             <div class="master-name">{{ $shift->user->formatted_name }}</div>
                                             <div class="revenue">
                                                 <div class="flex justify-between">

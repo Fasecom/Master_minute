@@ -44,6 +44,9 @@ class ScheduleTableEdit extends Component
 
     public function goPrevPage(): void
     {
+        // При переходе назад сбрасываем несохранённые изменения
+        $this->resetChanges();
+
         if ($this->currentPage > 1) {
             $this->currentPage--;
         }
@@ -196,6 +199,17 @@ class ScheduleTableEdit extends Component
                 }
                 $shift->save();
             }
+
+            // Сохраняем изменения цветов мастеров (если есть)
+            $colorChanges = session('schedule.edit.masterColors', []);
+            foreach($colorChanges as $uid => $color){
+                if(!$color) continue;
+                User::where('id',$uid)->update(['color'=>$color]);
+            }
+
+            // Очистить локальные изменения цвета
+            session()->forget(['schedule.edit.masterColors']);
+
             DB::commit();
 
             // Очистить локальные изменения
@@ -209,6 +223,13 @@ class ScheduleTableEdit extends Component
         }
 
         return redirect()->route('schedule');
+    }
+
+    // Сброс локальных изменений
+    private function resetChanges(): void
+    {
+        $this->changes = [];
+        session()->forget(['schedule.edit.changes']);
     }
 
     public function render()
@@ -231,7 +252,7 @@ class ScheduleTableEdit extends Component
             if($uid===null){
                 // помечено как удаление
                 if(isset($shifts[$workshopId])){
-                    $shifts[$workshopId] = $shifts[$workshopId]->reject(fn($s)=>$s->date==$date);
+                    $shifts[$workshopId] = $shifts[$workshopId]->reject(fn($s) => Carbon::parse($s->date)->format('Y-m-d') === $date);
                 }
                 continue;
             }
@@ -242,8 +263,8 @@ class ScheduleTableEdit extends Component
             if(!$dummy->user) continue;
             $dummy->user->formatted_name = $this->formatFullName($dummy->user->full_name);
             if(!isset($shifts[$workshopId])) $shifts[$workshopId]=collect();
-            // удалить возможное существующее
-            $shifts[$workshopId] = $shifts[$workshopId]->reject(fn($s)=>$s->user_id==$uid && $s->date==$date);
+            // Удаляем все смены на эту дату (независимо от мастера) перед добавлением новой, чтобы не было дублей
+            $shifts[$workshopId] = $shifts[$workshopId]->reject(fn($s) => Carbon::parse($s->date)->format('Y-m-d') === $date);
             $shifts[$workshopId]->push($dummy);
         }
 

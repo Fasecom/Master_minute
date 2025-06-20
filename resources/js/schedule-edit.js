@@ -99,6 +99,21 @@ export function initScheduleEdit() {
             window.Livewire.dispatch('saveShifts');
         });
     }
+
+    // Обновление цвета карточек при изменении цвета мастера
+    if(window.Livewire){
+        window.Livewire.on('masterColorChanged', ({userId, color}) => {
+            if(!userId || !color) return;
+            document.querySelectorAll('.shifts-card[data-user-id="'+userId+'"]').forEach(el => {
+                el.style.backgroundColor = color;
+            });
+            // Обновляем шаблон, чтобы новые перетаскивания были с новым цветом
+            const tpl = document.querySelector('#master-card-template-'+userId);
+            if(tpl && tpl.content && tpl.content.firstElementChild){
+                tpl.content.firstElementChild.style.backgroundColor = color;
+            }
+        });
+    }
 }
 
 // Автоинициализация при load

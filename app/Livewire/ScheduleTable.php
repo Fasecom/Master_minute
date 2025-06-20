@@ -31,6 +31,13 @@ class ScheduleTable extends Component
 
     public function mount(): void
     {
+        // При открытии обычного режима просмотра графика очищаем временные данные режима редактирования
+        session()->forget([
+            'schedule.edit.changes',
+            'schedule.edit.monthYear',
+            'schedule.edit.currentPage',
+        ]);
+
         // Берём из сессии (для перезагрузки F5)
         $this->monthYear = session('schedule.monthYear', now()->format('Y-m'));
         $this->selectedMasters = session('schedule.selectedMasters', []);

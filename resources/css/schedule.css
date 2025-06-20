@@ -299,7 +299,7 @@
 }
 
 .flipper-arrow:disabled img {
-    visibility: hidden;
+    opacity: 0.3;
 }
 
 .flipper-number {
@@ -307,7 +307,7 @@
     font-weight: 400;
     font-size: 40px;
     color: #234E9B;
-    min-width: 32px;
+    width:20px;
     text-align: center;
     user-select: none;
 }

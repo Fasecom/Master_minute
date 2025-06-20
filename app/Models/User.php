@@ -24,6 +24,7 @@ class User extends Authenticatable
         'role_id',
         'work_start_date',
         'work_end_date',
+        'color',
     ];
 
     /**
@@ -65,5 +66,21 @@ class User extends Authenticatable
     public function skills()
     {
         return $this->belongsToMany(\App\Models\Skill::class, 'skill_user', 'user_id', 'skill_id');
+    }
+
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::creating(function (User $user) {
+            // Автоматически назначаем цвет только мастерам (role_id = 3)
+            if ($user->role_id == 3 && empty($user->color)) {
+                $colors = config('master_colors');
+                if (!empty($colors)) {
+                    $index = User::where('role_id', 3)->whereNotNull('color')->count() % count($colors);
+                    $user->color = $colors[$index];
+                }
+            }
+        });
     }
 }

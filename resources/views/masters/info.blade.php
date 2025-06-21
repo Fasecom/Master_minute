@@ -2,19 +2,23 @@
     <x-slot name="header">
         <div class="w-full flex flex-col gap-4">
             <div class="flex flex-wrap items-center justify-between">
-                <h1 class="h1-header">Мастера</h1>
-                <div class="flex items-center gap-4 ml-auto">
-                    <a href="{{ route('masters') }}" class="btn-leval3 btn-red">
-                        <img src="/img/icon/undo.svg" alt="Назад" width="24" height="24">
-                    </a>
-                </div>
+                @if(Auth::user()->role_id == 3)
+                    <h1 class="h1-header">Профиль</h1>
+                @else
+                    <h1 class="h1-header">Мастера</h1>
+                    <div class="flex items-center gap-4 ml-auto">
+                        <a href="{{ route('masters') }}" class="btn-leval3 btn-red">
+                            <img src="/img/icon/undo.svg" alt="Назад" width="24" height="24">
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </x-slot>
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col gap-5 bg-white rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 md:p-[20px] min-h-[340px] w-full mb-5">
-                <div class="flex gap-8 pl-2">
+                <div class="flex gap-8">
                     <!-- Левая часть -->
                     <div class="flex flex-col gap-5 pl-2 w-1/2">
                         <h1 class="h1-header">{{ $master->full_name }}</h1>
@@ -58,10 +62,10 @@
                             </ul>
                         </div>
                     </div>
+                    <!-- Правая часть -->
                     <div class="flex flex-col gap-5 pl-2" >
                         <img src="/img/AnlShops.svg" alt="">
                     </div>
-                    <!-- Правая часть (график не нужен) -->
                 </div>
                 <div>
                     <ul class="flex flex-col gap-2">
@@ -73,10 +77,11 @@
                     </ul>
                     <img src="/img/BigAnlShops.svg" alt="">
                 </div>
-                </div>
-                <div class="flex justify-end">
-                    <a href="{{ route('masters.edit', $master->id) }}" class="btn-leval4 btn-blue flex items-center gap-2"><img src="/img/icon/pencil.svg" alt="Редактировать" width="20" height="20"></a>
-                </div>
+                @if(auth()->user()->role_id != 3)
+                    <div class="flex justify-end">
+                        <a href="{{ route('masters.edit', $master->id) }}" class="btn-leval4 btn-blue flex items-center gap-2"><img src="/img/icon/pencil.svg" alt="Редактировать" width="20" height="20"></a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

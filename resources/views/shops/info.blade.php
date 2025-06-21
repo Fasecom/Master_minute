@@ -41,22 +41,24 @@
                                     {{ $currentEmployee ? collect(explode(' ', $currentEmployee->full_name))->take(2)->implode(' ') : 'Нет сотрудника' }}
                                 </h3>
                             </li>
-                            <li class="flex items-center gap-2">
-                                <img src="/img/icon/call.svg" alt="phone" width="23" height="23">
-                                <h3 class="h3-point">Телефон:</h3>
-                                <h3 class="h3-point-info">
-                                    @if($shop->phone)
-                                        {{ '+7 ' . substr($shop->phone, 1, 3) . ' ' . substr($shop->phone, 4, 3) . ' ' . substr($shop->phone, 7, 2) . ' ' . substr($shop->phone, 9, 2) }}
-                                    @else
-                                        Нету
-                                    @endif
-                                </h3>
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <img src="/img/icon/mail.svg" alt="email" width="23" height="23">
-                                <h3 class="h3-point">Почта:</h3>
-                                <h3 class="h3-point-info">{{ $shop->email ?? 'Нету' }}</h3>
-                            </li>
+                            @if(auth()->user()->role_id != 3)
+                                <li class="flex items-center gap-2">
+                                    <img src="/img/icon/call.svg" alt="phone" width="23" height="23">
+                                    <h3 class="h3-point">Телефон:</h3>
+                                    <h3 class="h3-point-info">
+                                        @if($shop->phone)
+                                            {{ '+7 ' . substr($shop->phone, 1, 3) . ' ' . substr($shop->phone, 4, 3) . ' ' . substr($shop->phone, 7, 2) . ' ' . substr($shop->phone, 9, 2) }}
+                                        @else
+                                            Нету
+                                        @endif
+                                    </h3>
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <img src="/img/icon/mail.svg" alt="email" width="23" height="23">
+                                    <h3 class="h3-point">Почта:</h3>
+                                    <h3 class="h3-point-info">{{ $shop->email ?? 'Нету' }}</h3>
+                                </li>
+                            @endif
                         </ul>
                         <!-- Услуги -->
                         <div class="flex flex-col gap-1">
@@ -90,11 +92,13 @@
                     </ul>
                     <img src="/img/BigAnlMaster.svg" alt="">
                 </div>
-                <div class="flex justify-end">
-                    <a href="{{ route('shops.edit', $shop->id) }}" class="btn-leval4 btn-blue flex items-center gap-2">
-                        <img src="/img/icon/pencil.svg" alt="Редактировать" width="20" height="20">
-                    </a>
-                </div>
+                @if(auth()->user()->role_id != 3)
+                    <div class="flex justify-end">
+                        <a href="{{ route('shops.edit', $shop->id) }}" class="btn-leval4 btn-blue flex items-center gap-2">
+                            <img src="/img/icon/pencil.svg" alt="Редактировать" width="20" height="20">
+                        </a>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

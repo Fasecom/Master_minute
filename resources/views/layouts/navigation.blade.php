@@ -9,23 +9,25 @@
                 </a>
             </div>
             <!-- Navigation Links -->
-            <div class="flex ml-auto space-x-8">
-                <x-nav-link :href="route('masters')" :active="request()->routeIs('masters')" class="custom-nav-link">
-                    {{ __('Мастера') }}
+            <div class="hidden sm:flex ml-auto space-x-8">
+                <x-nav-link :href="route('schedule')" :active="request()->routeIs('schedule')" class="custom-nav-link">
+                    {{ __('График смен') }}
                 </x-nav-link>
                 <x-nav-link :href="route('shops')" :active="request()->routeIs('shops')" class="custom-nav-link">
                     {{ __('Торговые точки') }}
                 </x-nav-link>
-                <x-nav-link :href="route('schedule')" :active="request()->routeIs('schedule')" class="custom-nav-link">
-                    {{ __('График смен') }}
-                </x-nav-link>
+                @if(Auth::user()->role_id != 3)
+                    <x-nav-link :href="route('masters')" :active="request()->routeIs('masters')" class="custom-nav-link">
+                        {{ __('Мастера') }}
+                    </x-nav-link>
+                @endif
             </div>
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                            <div>{{ Auth::user()->short_name }}</div>
 
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -36,6 +38,11 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        @if(Auth::user()->role_id == 3)
+                            <x-dropdown-link :href="route('masters.info', ['id'=>Auth::user()->getKey()])" class="custom-nav-link-compact">
+                                {{ __('Профиль') }}
+                            </x-dropdown-link>
+                        @endif
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -64,28 +71,33 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('masters')" :active="request()->routeIs('masters')">
-                {{ __('Мастера') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('shops')" :active="request()->routeIs('shops')">
-                {{ __('Торговые точки') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('schedule')" :active="request()->routeIs('schedule')">
                 {{ __('График смен') }}
+            </x-responsive-nav-link>
+            @if(Auth::user()->role_id != 3)
+                <x-responsive-nav-link :href="route('shops')" :active="request()->routeIs('shops')">
+                    {{ __('Мастера') }}
+                </x-responsive-nav-link>
+            @endif
+            <x-responsive-nav-link :href="route('shops')" :active="request()->routeIs('shops')">
+                {{ __('Торговые точки') }}
             </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-base text-gray-800">{{ Auth::user()->short_name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+                @if(Auth::user()->role_id == 3)
+                    <!-- Profile -->
+                    <x-responsive-nav-link :href="route('masters.info', ['id'=>Auth::user()->getKey()])">
+                        {{ __('Профиль') }}
+                    </x-responsive-nav-link>
+                @endif
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
@@ -94,7 +106,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Выйти') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

@@ -68,6 +68,25 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Models\Skill::class, 'skill_user', 'user_id', 'skill_id');
     }
 
+    /**
+     * Get short representation of user name: "Фамилия И.О.".
+     *
+     * @return string
+     */
+    public function getShortNameAttribute(): string
+    {
+        if (empty($this->full_name)) {
+            return $this->name ?? $this->email ?? '';
+        }
+
+        $parts = preg_split('/\s+/u', trim($this->full_name));
+        $surname = $parts[0] ?? '';
+        $firstInitial = isset($parts[1]) ? mb_substr($parts[1], 0, 1).'.' : '';
+        $patronymicInitial = isset($parts[2]) ? mb_substr($parts[2], 0, 1).'.' : '';
+
+        return trim(sprintf('%s %s%s', $surname, $firstInitial, $patronymicInitial));
+    }
+
     protected static function booted()
     {
         parent::booted();

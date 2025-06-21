@@ -23,13 +23,26 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/masters', function () {
+        // Если текущий пользователь – мастер, сразу переадресуем на его карточку
+        if (auth()->user()->role_id == 3) {
+            return redirect()->route('masters.info', ['id' => auth()->user()->getKey()]);
+        }
+
         $masters = User::where('role_id', 3)
             ->whereNull('work_end_date')
             ->get();
         return view('masters.index', compact('masters'));
     })->name('masters');
     Route::get('/masters/info/{id}', function ($id) {
+        // Мастеру разрешено смотреть только свою карточку
+        if (auth()->user()->role_id == 3 && auth()->user()->getKey() != $id) {
+            abort(403);
+        }
+
         $master = User::find($id);
+        if (!$master) {
+            abort(404);
+        }
         $shift = $master?->workingShifts()->whereDate('date', date('Y-m-d'))->first();
         $workshop = $shift?->workshop;
         $workStart = $master?->work_start_date;
@@ -55,34 +68,42 @@ Route::middleware('auth')->group(function () {
             $experience = 'Нет стажа';
         }
         $workStartDate = $workStart ? \Carbon\Carbon::parse($workStart)->format('d.m.Y') : '-';
-        $skills = $master ? $master->skills()->pluck('name') : collect();
+        $skills = $master->skills()->pluck('name');
         return view('masters.info', compact('master', 'workshop', 'experience', 'workStartDate', 'skills'));
     })->name('masters.info');
-    Route::get('/masters/add', [\App\Http\Controllers\MasterController::class, 'create'])->name('masters.add');
-    Route::post('/masters/add', [\App\Http\Controllers\MasterController::class, 'store'])->name('masters.store');
-    Route::get('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'edit'])->name('masters.edit');
-    Route::post('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'update'])->name('masters.update');
-    Route::post('/masters/delete/{id}', [\App\Http\Controllers\MasterController::class, 'delete'])->name('masters.delete');
+    // Доступ только Администратору и Менеджеру
+    Route::middleware('role:1,2')->group(function () {
+        Route::get('/masters/add', [\App\Http\Controllers\MasterController::class, 'create'])->name('masters.add');
+        Route::post('/masters/add', [\App\Http\Controllers\MasterController::class, 'store'])->name('masters.store');
+        Route::get('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'edit'])->name('masters.edit');
+        Route::post('/masters/edit/{id}', [\App\Http\Controllers\MasterController::class, 'update'])->name('masters.update');
+        Route::post('/masters/delete/{id}', [\App\Http\Controllers\MasterController::class, 'delete'])->name('masters.delete');
+        Route::get('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsEdit'])->name('masters.skills.edit');
+        Route::post('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsUpdate'])->name('masters.skills.update');
+    });
     Route::get('/shops', [\App\Http\Controllers\ShopController::class, 'index'])->name('shops');
-    Route::get('/shops/add', [\App\Http\Controllers\ShopController::class, 'add'])->name('shops.add');
+    // Общедоступные для всех авторизованных
     Route::get('/shops/info/{id}', [\App\Http\Controllers\ShopController::class, 'info'])->name('shops.info');
-    Route::post('/shops/add', [\App\Http\Controllers\ShopController::class, 'store'])->name('shops.store');
-    Route::get('/shops/edit/{id}', [\App\Http\Controllers\ShopController::class, 'edit'])->name('shops.edit');
-    Route::post('/shops/edit/{id}', [\App\Http\Controllers\ShopController::class, 'update'])->name('shops.update');
-    Route::post('/shops/delete/{id}', [\App\Http\Controllers\ShopController::class, 'delete'])->name('shops.delete');
-    Route::get('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesEdit'])->name('shops.services.edit');
-    Route::post('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesUpdate'])->name('shops.services.update');
+    // Доступ только Администратору и Менеджеру
+    Route::middleware('role:1,2')->group(function () {
+        Route::get('/shops/add', [\App\Http\Controllers\ShopController::class, 'add'])->name('shops.add');
+        Route::post('/shops/add', [\App\Http\Controllers\ShopController::class, 'store'])->name('shops.store');
+        Route::get('/shops/edit/{id}', [\App\Http\Controllers\ShopController::class, 'edit'])->name('shops.edit');
+        Route::post('/shops/edit/{id}', [\App\Http\Controllers\ShopController::class, 'update'])->name('shops.update');
+        Route::post('/shops/delete/{id}', [\App\Http\Controllers\ShopController::class, 'delete'])->name('shops.delete');
+        Route::get('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesEdit'])->name('shops.services.edit');
+        Route::post('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesUpdate'])->name('shops.services.update');
+    });
     Route::get('/schedule', function () {
         return view('schedule.index');
     })->name('schedule');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsEdit'])->name('masters.skills.edit');
-    Route::post('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsUpdate'])->name('masters.skills.update');
     Route::get('/schedule/revenue/add', [\App\Http\Controllers\WorkingShiftController::class, 'addRevenueForm'])->name('schedule.revenue.add');
     Route::post('/schedule/revenue/add', [\App\Http\Controllers\WorkingShiftController::class, 'storeRevenue'])->name('schedule.revenue.store');
-    Route::get('/schedule/edit', function () {
+    // Редактирование графика – только Администратор и Менеджер
+    Route::middleware('role:1,2')->get('/schedule/edit', function () {
         return view('schedule.edit');
     })->name('schedule.edit');
 });

@@ -4,6 +4,7 @@
             <div class="flex flex-wrap items-center justify-between">
                 <h1 class="h1-header">Торговые точки</h1>
                 <div class="flex items-center gap-4 ml-auto">
+                    <livewire:month-year-filter/>
                     <a href="{{ route('shops') }}" class="btn-leval3 btn-red">
                         <img src="/img/icon/undo.svg" alt="Назад" width="24" height="24">
                     </a>
@@ -14,7 +15,7 @@
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col gap-5 bg-white rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 md:p-[20px] min-h-[340px] w-full mb-5">
-                <div class="flex gap-8">
+                <div class="flex">
                     <!-- Левая часть -->
                     <div class="flex flex-col gap-5 pl-2 w-1/2">
                         <h1 class="h1-header">{{ $shop->name }}</h1>
@@ -77,8 +78,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="flex flex-col gap-5 pl-2" >
-                        <img src="/img/AnlMaster.svg" alt="">
+                    <div class="flex flex-col gap-5 pl-2 w-1/2" >
+                        <livewire:shop-revenue-chart :shop="$shop" />
                     </div>
                     <!-- Правая часть (график не нужен) -->
                 </div>
@@ -90,7 +91,7 @@
                             <h3 class="h3-point">Статистика</h3>
                         </li>
                     </ul>
-                    <img src="/img/BigAnlMaster.svg" alt="">
+                    <livewire:shop-year-revenue-chart :shop="$shop" />
                 </div>
                 @if(auth()->user()->role_id != 3)
                     <div class="flex justify-end">

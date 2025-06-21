@@ -162,6 +162,13 @@
     color: #2E4555;
 }
 
+.h4-point-analitics {
+    color: #2E4555;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+} 
+
 /* Кастомный чекбокс для формы навыков */
 input[type="checkbox"] {
     appearance: none;

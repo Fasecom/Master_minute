@@ -11,8 +11,8 @@
     @php
         $fn = 'render_'.str_replace('-', '_', $chartId);
     @endphp
-    function {{ $fn }}(){
-        if(!window.am5){ setTimeout({{ $fn }},100); return; }
+    function {{ $fn }}(newData = null){
+        if(!window.am5){ setTimeout(()=>{{ $fn }}(newData),100); return; }
         if(window['root_{{ $chartId }}']){
             window['root_{{ $chartId }}'].dispose();
         }
@@ -45,10 +45,11 @@
             tooltip: window.am5.Tooltip.new(root, { labelText: "{valueY}" })
         }));
 
-        xAxis.data.setAll(@json($chartData));
-        console.log('shopYearData', @json($chartData));
+        const chartData = newData ?? @json($chartData);
+        xAxis.data.setAll(chartData);
+        console.log('shopYearData', chartData);
         series.strokes.template.setAll({ strokeWidth: 3, stroke: window.am5.color(0x234E9B) });
-        series.data.setAll(@json($chartData));
+        series.data.setAll(chartData);
 
         // курсор для наведения, как в демо
         let cursor = chart.set("cursor", window.am5xy.XYCursor.new(root, {
@@ -69,6 +70,13 @@
             return window.am5.Bullet.new(root, { sprite: circle });
         });
     }
+    // первый рендер
     {{ $fn }}();
-    document.addEventListener('livewire:navigated', {{ $fn }});
+    // слушаем обновления из Livewire
+    window.addEventListener('updateChart', (e) => {
+        if(e.detail && e.detail.chartId === "{{ $chartId }}"){
+            {{ $fn }}(e.detail.data);
+        }
+    });
+    document.addEventListener('livewire:navigated', () => {{ $fn }}());
 </script> 

@@ -30,6 +30,9 @@ class MasterYearRevenueChart extends Component
     {
         $this->monthYear = $monthYear;
         $this->generateData();
+
+        // dispatch browser event with new data
+        $this->dispatch('updateChart', chartId: $this->chartId, data: $this->chartData);
     }
 
     private function generateData(): void

@@ -80,6 +80,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/masters/delete/{id}', [\App\Http\Controllers\MasterController::class, 'delete'])->name('masters.delete');
         Route::get('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsEdit'])->name('masters.skills.edit');
         Route::post('/masters/skills/edit', [\App\Http\Controllers\MasterController::class, 'skillsUpdate'])->name('masters.skills.update');
+        Route::get('/masters/analytics', function () {
+            return view('masters.analytics');
+        })->name('masters.analytics');
     });
     Route::get('/shops', [\App\Http\Controllers\ShopController::class, 'index'])->name('shops');
     // Общедоступные для всех авторизованных
@@ -93,6 +96,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/shops/delete/{id}', [\App\Http\Controllers\ShopController::class, 'delete'])->name('shops.delete');
         Route::get('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesEdit'])->name('shops.services.edit');
         Route::post('/shops/services/edit', [\App\Http\Controllers\ShopController::class, 'servicesUpdate'])->name('shops.services.update');
+        Route::get('/shops/analytics', function () {
+            return view('shops.analytics');
+        })->name('shops.analytics');
     });
     Route::get('/schedule', function () {
         return view('schedule.index');

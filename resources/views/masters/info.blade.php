@@ -73,7 +73,7 @@
                         <!-- Пункты -->
                         <li class="flex items-center gap-2">
                             <img src="/img/icon/chart-histogram.svg" alt="place" width="23" height="23">
-                            <h3 class="h3-point">Статистика</h3>
+                            <h3 class="h3-point">Выручка за год</h3>
                         </li>
                     </ul>
                     <livewire:master-year-revenue-chart :master="$master" />

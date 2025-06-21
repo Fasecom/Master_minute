@@ -5,18 +5,19 @@
     <script src="https://cdn.amcharts.com/lib/5/locales/ru_RU.js"></script>
 @endonce
 
-<div wire:ignore id="{{ $chartId }}" class="w-full h-[300px]"></div>
+<div wire:ignore id="{{ $chartId }}" class="w-full h-[400px]"></div>
 
 <script>
     @php
         $fn = 'render_'.str_replace('-', '_', $chartId);
     @endphp
     function {{ $fn }}(newData = null){
+        // Ensure amCharts is available
         if(!window.am5){ setTimeout(()=>{{ $fn }}(newData),100); return; }
 
         const data = newData ?? @json($chartData);
         const container = document.getElementById("{{ $chartId }}");
-        const hasData = Array.isArray(data) && data.some(d => parseFloat(d.value || 0) > 0);
+        const hasData = Array.isArray(data) && data.some(d => parseFloat(d.value || d.valueY || 0) > 0);
 
         if(!hasData){
             if(window['root_{{ $chartId }}']){
@@ -43,17 +44,29 @@
         });
         let chart = root.container.children.push(window.am5xy.XYChart.new(root, {}));
 
-        let xRenderer = window.am5xy.AxisRendererX.new(root, { minGridDistance: 30 });
+        let xRenderer = window.am5xy.AxisRendererX.new(root, {
+            minGridDistance: 40,
+            minorGridEnabled: true,
+            minorLabelsEnabled: true
+        });
+        xRenderer.labels.template.setAll({ location: 0.5 });
+        xRenderer.grid.template.setAll({ location: 0 });
         let xAxis = chart.xAxes.push(window.am5xy.DateAxis.new(root, {
             baseInterval: { timeUnit: "month", count: 1 },
             groupData: false,
             renderer: xRenderer,
+            minorDateFormats: {
+                month: " "
+            }
         }));
 
         let yRenderer = window.am5xy.AxisRendererY.new(root, {});
-        let yAxis = chart.yAxes.push(window.am5xy.ValueAxis.new(root, { renderer: yRenderer }));
+        let yAxis = chart.yAxes.push(window.am5xy.ValueAxis.new(root, {
+            renderer: yRenderer,
+        }));
 
         let series = chart.series.push(window.am5xy.LineSeries.new(root, {
+            name: "Выручка",
             xAxis: xAxis,
             yAxis: yAxis,
             valueYField: "value",
@@ -63,11 +76,10 @@
         }));
 
         xAxis.data.setAll(data);
-        console.log('shopYearData', data);
+        console.log('companyYearData', data);
         series.strokes.template.setAll({ strokeWidth: 3, stroke: window.am5.color(0x234E9B) });
         series.data.setAll(data);
 
-        // курсор для наведения, как в демо
         let cursor = chart.set("cursor", window.am5xy.XYCursor.new(root, {
             xAxis: xAxis,
             yAxis: yAxis,
@@ -75,23 +87,20 @@
         }));
         cursor.lineY.set("visible", false);
 
-        // bullets
         series.bullets.push(function(){
             const circle = window.am5.Circle.new(root, {
                 radius: 4,
                 fill: series.get("stroke"),
             });
-            // увеличиваем маркер при наведении
             circle.states.create("hover", { scale: 1.5 });
             return window.am5.Bullet.new(root, { sprite: circle });
         });
 
+        // Animate on first render/update
         series.appear(800);
         chart.appear(800, 50);
     }
-    // первый рендер
     {{ $fn }}();
-    // слушаем обновления из Livewire
     window.addEventListener('updateChart', (e) => {
         if(e.detail && e.detail.chartId === "{{ $chartId }}"){
             {{ $fn }}(e.detail.data);

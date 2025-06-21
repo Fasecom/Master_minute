@@ -13,10 +13,26 @@
     @endphp
     function {{ $fn }}(newData = null){
         if(!window.am5){ setTimeout(()=>{{ $fn }}(newData),100); return; }
-        // dispose previous root if exists
+
+        const data = newData ?? @json($chartData);
+        const container = document.getElementById("{{ $chartId }}");
+        const hasData = Array.isArray(data) && data.some(d => parseFloat(d.value || 0) > 0);
+
+        if(!hasData){
+            if(window['root_{{ $chartId }}']){
+                window['root_{{ $chartId }}'].dispose();
+                delete window['root_{{ $chartId }}'];
+            }
+            container.innerHTML = '<div class="flex items-center justify-center h-full text-gray-400">Нет данных</div>';
+            return;
+        }
+
+        container.innerHTML = '';
+
         if(window['root_{{ $chartId }}']){
             window['root_{{ $chartId }}'].dispose();
         }
+
         let root = window.am5.Root.new("{{ $chartId }}");
         window['root_{{ $chartId }}']=root;
         root.setThemes([ window.am5themes_Animated.new(root) ]);
@@ -27,11 +43,20 @@
         });
         let chart = root.container.children.push(window.am5xy.XYChart.new(root, {}));
 
-        let xRenderer = window.am5xy.AxisRendererX.new(root, { minGridDistance: 30 });
+        let xRenderer = window.am5xy.AxisRendererX.new(root, {
+            minGridDistance: 40,
+            minorGridEnabled: true,
+            minorLabelsEnabled: true
+        });
+        xRenderer.labels.template.setAll({ location: 0.5 });
+        xRenderer.grid.template.setAll({ location: 0 });
         let xAxis = chart.xAxes.push(window.am5xy.DateAxis.new(root, {
             baseInterval: { timeUnit: "month", count: 1 },
             groupData: false,
             renderer: xRenderer,
+            minorDateFormats: {
+                month: " "
+            }
         }));
 
         let yRenderer = window.am5xy.AxisRendererY.new(root, {});
@@ -49,11 +74,10 @@
             tooltip: window.am5.Tooltip.new(root, { labelText: "{valueY}" })
         }));
 
-        const chartData = newData ?? @json($chartData);
-        xAxis.data.setAll(chartData);
-        console.log('masterYearData', chartData);
+        xAxis.data.setAll(data);
+        console.log('masterYearData', data);
         series.strokes.template.setAll({ strokeWidth: 3, stroke: window.am5.color(0x234E9B) });
-        series.data.setAll(chartData);
+        series.data.setAll(data);
 
         let cursor = chart.set("cursor", window.am5xy.XYCursor.new(root, {
             xAxis: xAxis,
@@ -70,6 +94,9 @@
             circle.states.create("hover", { scale: 1.5 });
             return window.am5.Bullet.new(root, { sprite: circle });
         });
+
+        series.appear(800);
+        chart.appear(800, 50);
     }
     // первый рендер
     {{ $fn }}();

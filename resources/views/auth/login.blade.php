@@ -9,7 +9,7 @@
                 <div>
                     <div class="flex flex-col gap-2">
                         <label for="phone" class="h3-point">Телефон</label>
-                        <input id="phone" name="phone" type="tel" placeholder="login" class="input-header w-full" value="{{ old('phone') }}" required autofocus autocomplete="tel">
+                        <input id="phone" name="phone" type="tel" placeholder="+7 999 999 99 99" class="input-header w-full" value="{{ old('phone') }}" required autofocus autocomplete="tel">
                         @error('phone')<div class="text-red-500 text-sm mb-[-10px]">{{ $message }}</div>@enderror
                     </div>
                     <div class="flex flex-col gap-2 mt-4">

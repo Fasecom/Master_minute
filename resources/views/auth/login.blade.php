@@ -1,3 +1,5 @@
+@section('title', 'ММ: Вход')
+
 <x-guest-layout>
     <div class="flex justify-center items-center min-h-screen w-full bg-white">
         <div class="flex flex-row w-[800px] h-[380px] bg-transparent rounded-[20px] overflow-hidden"

@@ -1,3 +1,5 @@
+@section('title', 'ММ: Мастера')
+
 <x-app-layout>
     <x-slot name="header">
         <div class="w-full flex flex-col gap-4">
@@ -30,7 +32,7 @@
                     <ul class="flex flex-col gap-2">
                         <li class="flex items-center gap-2">
                             <img src="/img/icon/chart-histogram.svg" alt="place" width="23" height="23">
-                            <h3 class="h3-point">Рейтинг выручки за месяц</h3>
+                            <h3 class="h3-point">Рейтинг по выручки за месяц</h3>
                         </li>
                     </ul>
                     <livewire:master-revenue-rating-chart mode="month" />
@@ -39,7 +41,7 @@
                     <ul class="flex flex-col gap-2">
                         <li class="flex items-center gap-2">
                             <img src="/img/icon/chart-histogram.svg" alt="place" width="23" height="23">
-                            <h3 class="h3-point">Рейтинг выручки за год</h3>
+                            <h3 class="h3-point">Рейтинг по выручки за год</h3>
                         </li>
                     </ul>
                     <livewire:master-revenue-rating-chart mode="year" />
@@ -49,7 +51,7 @@
                     <ul class="flex flex-col gap-2">
                         <li class="flex items-center gap-2">
                             <img src="/img/icon/chart-histogram.svg" alt="place" width="23" height="23">
-                            <h3 class="h3-point">Рейтинг количества смен за год</h3>
+                            <h3 class="h3-point">Рейтинг по количества смен за год</h3>
                         </li>
                     </ul>
                     <livewire:master-shift-count-rating-chart />

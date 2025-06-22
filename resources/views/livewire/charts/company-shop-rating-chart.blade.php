@@ -5,6 +5,8 @@
     <script src="https://cdn.amcharts.com/lib/5/locales/ru_RU.js"></script>
 @endonce
 
+@php $unit = $unit ?? '₽'; @endphp
+
 <div wire:ignore id="{{ $chartId }}" class="w-full h-[500px]"></div>
 
 <script>
@@ -74,7 +76,7 @@
             yAxis: yAxis,
             valueYField: "value",
             categoryXField: "category",
-            tooltip: window.am5.Tooltip.new(root, { labelText: "{valueY.formatNumber('#,###.')} ₽"})
+            tooltip: window.am5.Tooltip.new(root, { labelText: "{valueY.formatNumber('#,###.')} {{ $unit }}"})
         }));
 
         // градиент цвета от лучшего к худшему

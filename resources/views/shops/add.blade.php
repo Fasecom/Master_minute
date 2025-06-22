@@ -1,3 +1,5 @@
+@section('title', 'ММ: Торговые точки')
+
 <x-app-layout>
     <x-slot name="header">
         <div class="w-full flex flex-col gap-4">

@@ -44,9 +44,6 @@ class ScheduleTableEdit extends Component
 
     public function goPrevPage(): void
     {
-        // При переходе назад сбрасываем несохранённые изменения
-        $this->resetChanges();
-
         if ($this->currentPage > 1) {
             $this->currentPage--;
         }
@@ -223,13 +220,6 @@ class ScheduleTableEdit extends Component
         }
 
         return redirect()->route('schedule');
-    }
-
-    // Сброс локальных изменений
-    private function resetChanges(): void
-    {
-        $this->changes = [];
-        session()->forget(['schedule.edit.changes']);
     }
 
     public function render()

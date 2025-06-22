@@ -78,6 +78,6 @@ class MasterRevenueRatingChart extends Component
     public function render()
     {
         // Reuse existing template for rating charts
-        return view('livewire.charts.company-shop-rating-chart');
+        return view('livewire.charts.company-shop-rating-chart', ['unit' => '₽']);
     }
 } 

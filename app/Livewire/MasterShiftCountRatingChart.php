@@ -67,6 +67,6 @@ class MasterShiftCountRatingChart extends Component
 
     public function render()
     {
-        return view('livewire.charts.company-shop-rating-chart');
+        return view('livewire.charts.company-shop-rating-chart', ['unit' => '']);
     }
 } 

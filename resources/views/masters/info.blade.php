@@ -1,9 +1,18 @@
+@if(Auth::user()->role_id == 3)
+    @section('title', 'ММ: Профиль')
+@else
+    @section('title', 'ММ: Мастера')
+@endif
+
 <x-app-layout>
     <x-slot name="header">
         <div class="w-full flex flex-col gap-4">
             <div class="flex flex-wrap items-center justify-between">
                 @if(Auth::user()->role_id == 3)
                     <h1 class="h1-header">Профиль</h1>
+                    <div class="flex items-center gap-4 ml-auto">
+                        <livewire:month-year-filter/>
+                    </div>
                 @else
                     <h1 class="h1-header">Мастера</h1>
                     <div class="flex items-center gap-4 ml-auto">
@@ -21,7 +30,7 @@
             <div class="flex flex-col gap-5 bg-white rounded-[21px] shadow-[0_5px_27px_rgba(46,69,85,0.25)] p-5 md:p-[20px] min-h-[340px] w-full mb-5">
                 <div class="flex">
                     <!-- Левая часть -->
-                    <div class="flex flex-col gap-5 pl-2 w-1/2">
+                    <div class="flex flex-col gap-5 pl-2 w-full md:w-1/2">
                         <h1 class="h1-header">{{ $master->full_name }}</h1>
                         <ul class="flex flex-col gap-2">
                             <!-- Пункты -->
@@ -64,7 +73,7 @@
                         </div>
                     </div>
                     <!-- Правая часть -->
-                    <div class="flex flex-col gap-5 pl-2 w-1/2" >   
+                    <div class="hidden md:flex flex-col gap-5 pl-2 w-1/2" >   
                         <livewire:master-revenue-chart :master="$master" />
                     </div>
                 </div>

@@ -33,7 +33,7 @@
         <div class="absolute inset-[5.5%] rounded-full bg-white flex items-center justify-center text-center text-[#2E4555]">
             <div class="flex flex-col items-center">
                 <span class="h1-header leading-tight">{{ number_format($data['currentRevenue'], 0, ',', ' ') }} руб</span>
-                <span class="text-sm text-gray-500">{{ $data['prevPercent'] }}% от прошлого выручки</span>
+                <span class="text-sm text-gray-500">{{ $data['prevPercent'] }}% от выручки за прошлый месяц</span>
             </div>
         </div>
     </div>

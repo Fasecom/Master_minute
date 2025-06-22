@@ -199,6 +199,22 @@ class ScheduleTable extends Component
 
         $days = $this->getDays($startDate, $endDate);
 
+        // Общая выручка по всем мастерским за месяц (учитываются фильтры мастеров/точек, но не пагинация)
+        $totalRevenueQuery = WorkingShift::query()
+            ->whereBetween('date', [$startDate, $endDate]);
+
+        if (!empty($this->selectedShops)) {
+            $totalRevenueQuery->whereIn('workshop_id', $this->selectedShops);
+        }
+
+        if (!empty($this->selectedMasters)) {
+            $totalRevenueQuery->whereIn('user_id', $this->selectedMasters);
+        }
+
+        $totalRevenue = (float) $totalRevenueQuery
+            ->selectRaw('COALESCE(SUM(cash_revenue + cashless_revenue), 0) as sum')
+            ->value('sum');
+
         return view('livewire.schedule-table', [
             'workshops' => $workshops,
             'shifts' => $shifts,
@@ -208,6 +224,7 @@ class ScheduleTable extends Component
             'monthYear' => $this->monthYear,
             'selectedMasters' => $this->selectedMasters,
             'selectedShops' => $this->selectedShops,
+            'totalRevenue' => $totalRevenue,
         ]);
     }
 }

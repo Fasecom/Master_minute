@@ -81,7 +81,9 @@ class ShopRevenueChart extends Component
             ->groupBy(DB::raw('DATE(date)'))
             ->pluck('rev');
 
-        $minDay = $dailySums->min() ?? 0;
+        // Минимальная ненулевая выручка за день (ноль, если выручки не было вообще)
+        $nonZeroDaily = $dailySums->filter(fn ($rev) => floatval($rev) > 0);
+        $minDay = $nonZeroDaily->min() ?? 0;
         $maxDay = $dailySums->max() ?? 0;
 
         $this->data = [

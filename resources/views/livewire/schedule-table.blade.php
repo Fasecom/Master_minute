@@ -14,7 +14,6 @@
                     </table>
                 </div>
                 <div class="calendar">
-                    @if($totalPages > 1)
                     <div class="page-flipper">
                         <button class="flipper-arrow" type="button" wire:click="goPrevPage" {{ $currentPage <= 1 ? 'disabled' : '' }}>
                             <img src="/img/icon/angle-left.svg" alt="Назад" width="20" height="20">
@@ -24,7 +23,6 @@
                             <img src="/img/icon/angle-right.svg" alt="Вперёд" width="20" height="20">
                         </button>
                     </div>
-                    @endif
 
                     @foreach($days as $day)
                         <div class="date {{ $day['isWeekend'] ? 'red' : '' }}">
@@ -117,7 +115,7 @@
             <div class="result flex">
                 <div class="result-total">Итого:</div>
                 <div class="result-total-revenue">
-                    {{ number_format($shifts->flatten()->sum('cash_revenue') + $shifts->flatten()->sum('cashless_revenue'), 0, ',', ' ') }} ₽
+                    {{ number_format($totalRevenue, 0, ',', ' ') }} ₽
                 </div>
             </div>
         </div>
